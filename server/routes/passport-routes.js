@@ -5,6 +5,8 @@ const cookie = require('cookie');
 const ErrorHandler = require("../utils/ErrorHandler.js");
 const catchAsyncErrors = require("../middleware/catchAsyncErrors.js");
 
+
+//==================================Auth Routes==================================
 // Route for initiating Steam authentication
 router.get(
   '/auth/steam',
@@ -21,25 +23,9 @@ router.get(
 
     res.cookie('userData', JSON.stringify(req.user), { httpOnly: true });
 
-    res.redirect(`http://localhost:5173/?token=${token}`);
+    res.redirect(`http://localhost:5173/?token=${req.user.steamId}`);
   }
 );
-
-//Route to get Auth user stored in the cookies
-// router.get('/auth/user', (req, res) => {
-//   // Verifica si existe la cookie 'userData' en la solicitud
-//   const userDataCookie = req.cookies.userData;
-//   if (userDataCookie) {
-//     // La cookie 'userData' fue encontrada en la solicitud, puedes acceder a su valor
-//     const userData = JSON.parse(userDataCookie);
-
-//     // Devuelve los datos del usuario almacenados en la cookie
-//     res.json(userData);
-//   } else {
-//     // La cookie 'userData' no fue encontrada en la solicitud
-//     res.status(404).json({ message: 'No se encontraron datos de usuario en las cookies.' });
-//   }
-// });
 
 router.get("/auth/user", catchAsyncErrors(async (req, res, next)=>{
     
@@ -56,8 +42,47 @@ router.get("/auth/user", catchAsyncErrors(async (req, res, next)=>{
     }catch (error){
       return next(new ErrorHandler(error.message, 500));
     }
-
-
 }))
+//==================================User Data==================================
+
+
+
+//send  user data need for a stem id get it from a post request? 
+GetPlayerSummaries
+router.get("/data/userSummaries", catchAsyncErrors(async (req, res, next)=>{
+    
+  
+  try{
+
+    }catch (error){
+      return next(new ErrorHandler(error.message, 500));
+    }
+}))
+
+// router.post('/data/userSummaries', catchAsyncErrors(async (req, res, next) => {
+//   try {
+//     const { steamUserId } = req.body; // Acceder al Steam User ID desde el cuerpo de la solicitud
+//     const apiKey = 'YOUR_API_KEY'; // Reemplaza con tu clave de API de Steam
+
+//     const response = await axios.get(`http://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key=${apiKey}&steamids=${steamUserId}`);
+
+//     if (response.status === 200) {
+//       const player = response.data.response.players[0];
+
+//       if (player) {
+//         const profilePicture = player.avatarfull;
+//         res.json({ profilePicture });
+//       } else {
+//         res.status(404).json({ error: 'Usuario no encontrado' });
+//       }
+//     } else {
+//       res.status(500).json({ error: 'Error al obtener datos de Steam' });
+//     }
+//   } catch (error) {
+//     next(error);
+//   }
+// }));
+
+
 
 module.exports = router;

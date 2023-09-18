@@ -1,78 +1,43 @@
-import { BrowserRouter, Routes, Route, useNavigate} from "react-router-dom";
+import { useEffect, useState } from 'react'
+import { BrowserRouter, Routes, Route} from "react-router-dom";
 import { HomePage, LoginPage } from './Routes';
+import { useAppDispatch, useAppSelector } from "./redux/store";
+import { setUser, clearUser  } from './redux/slice/userSlice';
 
-// function SteamLogin() {
-//   const [redirecting, setRedirecting] = useState(false);
-//   const navigate = useNavigate();
-//   const [userData, setUserData] = useState<null | any>(null);
+import axios from 'axios';
 
-
-//   useEffect(() => {
-//     const queryParams = new URLSearchParams(window.location.search);
-//     const token = queryParams.get('token');
-
-//     if (token) {
-//       // Aquí puedes almacenar el token en el estado o en las cookies según tu preferencia
-//       // Por ejemplo, utilizando el estado local:
-//       // localStorage.setItem('authToken', token);
-//       // O configurando una cookie
-//       // document.cookie = `authToken=${token}; path=/;`;
-//       // Redirigir al usuario a la página de inicio o a donde sea necesario
-//       navigate('/'); // Cambia esto
-//     } else {
-//       // El usuario no está autenticado, puedes mostrar un botón para iniciar sesión con Steam
-//       setRedirecting(false);
-//     }
-//   }, [navigate]);
-
-//   useEffect(() => {
-//     axios.get('http://localhost:3001/auth/user', { withCredentials: true })
-//       .then(response => {
-//         console.log(response);
-        
-//       })
-//       .catch(error => {
-//         console.error('Error al obtener datos de usuario:', error);
-//       });
-//   }, []);
-
-//   const handleSteamLogin = () => {
-//     // Redirigir al usuario a tu backend para iniciar sesión con Steam
-//     setRedirecting(true);
-//     window.location.href = 'http://localhost:3001/auth/steam'; // Reemplaza con la URL de tu backend
-//   };
-
-//   return (
-//     <div>
-//       {redirecting ? (
-//         <p>Redirigiendo a Steam...</p>
-//       ) : (
-//         <button onClick={handleSteamLogin}>Iniciar sesión con Steam</button>
-//       )}
-
-//       {userData ? (
-//         <div>
-//           <p>Steam ID: {userData.steamId}</p>
-//           <p>Nombre de usuario: {userData.username}</p>
-//           {/* Otros datos del usuario */}
-//         </div>
-//       ) : (
-//         <p>No se encontraron datos de usuario en la cookie.</p>
-//       )}
-//     </div>
-//   );
-// }
+interface UserData {
+  steamId: string;
+  username: string;
+  displayName: string;
+  // Otros campos de usuario si los tienes
+}
 
 function App() {
+
+  const dispatch = useAppDispatch(); 
+
+  useEffect(() => {
+
+      axios.get('http://localhost:3001/auth/user', { withCredentials: true })
+          .then(response  => {
+              console.log(response);
+              dispatch(setUser(response.data))
+          })
+          .catch(error => {
+              console.error('Error al obtener datos de usuario:', error);
+          });
+  }, []);
+
+
+
   return (
     <BrowserRouter>
       <Routes>
         <Route path="/login" element={<LoginPage/>}/>
         <Route path="/" element={<HomePage/>}/>
       </Routes>
-    
     </BrowserRouter>
-
   );
 }
 
