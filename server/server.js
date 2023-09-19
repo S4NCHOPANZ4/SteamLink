@@ -2,7 +2,14 @@ const express = require('express');
 const passport = require('./config/passport-config')
 const session = require('express-session');
 const cookieParser = require('cookie-parser'); 
+const bodyParser = require('body-parser');
 const cors = require('cors')
+
+if (process.env.NODE_ENV !== "PRODUCTION") {
+  require("dotenv").config({
+    path: "./config/.env",
+  });
+}
 
 
 const app = express();
@@ -18,7 +25,8 @@ app.use(session({ secret: '64882127F2A6712358146C6A1F144FCA', resave: true, save
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(cookieParser());
-
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json()); 
 
 
 passport.serializeUser((user, done) => {
