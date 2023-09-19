@@ -2,6 +2,15 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+    --graybase-200: #57575f;
+    --graybase-300: #44444b;
+    --graybase-400: #36363c;
+    --graybase-500: #2d2d33;
+    --graybase-600: #212126;
+    --graybase-700: #1C1A24
+  }
+
 *{
     font-family: 'Nunito', sans-serif;
 }
@@ -18,4 +27,32 @@
 @keyframes spinner {
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
+}
+
+.box-shadow-yellow{
+    box-shadow: rgba(222, 170, 29, 0.5) 0px 0px 0.25em, rgba(222, 170, 29, 0.23) 0px 0.25em 1em;
+}
+.background-lineargradient{
+  background: linear-gradient(234deg, rgba(244, 244, 245, 0.055) 0%, rgba(57, 0, 76, 0.427) 80%);
+}
+
+.overflowBar{
+    ::-webkit-scrollbar {
+        width: 5px; /* Width of the scrollbar */
+      }
+      
+      ::-webkit-scrollbar-thumb {
+        background-color: #555; /* Color of the scrollbar thumb */
+        border-radius: 6px; /* Rounded corners of the thumb */
+      }
+      
+      ::-webkit-scrollbar-thumb:hover {
+        background-color: #555; /* Color of the scrollbar thumb on hover */
+      }
+      
+      scrollbar-width: thin; /* thin, auto, or none */
+      scrollbar-color: #888 #f1f1f1; /* thumb-color track-color */
+      scrollbar-thumb:hover {
+        background-color: #555;
+      }
 }
