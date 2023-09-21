@@ -36,6 +36,8 @@ passport.deserializeUser((user, done) => {
   done(null, user)
 });
 const authRoutes = require('./routes/passport-routes');
+const csgoGameAssets = require('./routes/csgoDb-routes');
+app.use('/assets', csgoGameAssets);
 app.use('/', authRoutes);
 
 
