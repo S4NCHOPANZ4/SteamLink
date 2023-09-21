@@ -32,8 +32,14 @@
 .box-shadow-yellow{
     box-shadow: rgba(222, 170, 29, 0.5) 0px 0px 0.25em, rgba(222, 170, 29, 0.23) 0px 0.25em 1em;
 }
+.box-shadow-pink{
+  box-shadow: rgba(125, 17, 192, 0.5) 0px 0px 0.25em, rgba(194, 47, 231, 0.23) 0px 0.25em 1em;
+}
 .background-lineargradient{
   background: linear-gradient(234deg, rgba(61, 61, 61, 0.76) 0%, rgba(57, 0, 76, 0.322) 80%);
+}
+.background-lineargradient-green{
+  background: linear-gradient(234deg, rgba(86, 197, 74, 0.31) 0%, rgba(37, 206, 11, 0.66) 80%);
 }
 
 .overflowBar ::-webkit-scrollbar {

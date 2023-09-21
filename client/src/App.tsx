@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { BrowserRouter, Routes, Route} from "react-router-dom";
-import { HomePage, LoginPage, ProfilePage } from './Routes';
+import { CasePage, HomePage, LoginPage, ProfilePage } from './Routes';
 import { useAppDispatch, useAppSelector } from "./redux/store";
 import { setUser, clearUser, addSteamUser } from './redux/slice/user/userSlice';
 
@@ -55,6 +55,7 @@ const FetchUserData = async(steamId: string) =>{
 
     <BrowserRouter>
       <Routes>
+        <Route path="/case/:caseName" element={<CasePage/>}/>
         <Route path="/login" element={<LoginPage/>}/>
         <Route path="/profile" element={<ProfilePage/>}/>
         <Route path="/" element={<HomePage/>}/>

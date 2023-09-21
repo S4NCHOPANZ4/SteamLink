@@ -9,9 +9,9 @@ const Header = () => {
       <div className='h-full w-full background-lineargradient absolute z-0'></div>
       <div className='absolute h-full w-full  flex items-center justify-center z-10 flex-col sm:flex-row'>
         <img className="w-[150px] lg:w-[300px] cursor-pointer transition-all duration-200 will-change-transform hover:-translate-y-1" src={caseSkinCage} alt="" />
-        <div className='flex flex-col items-center lg:items-end'>
+        <div className='flex flex-col items-center'>
           <h1 className='text-white font-ligth lg:text-3xl md:text-sm text-center'>YOUR GAME, YOUR STYLE, YOUR AGENTS</h1>
-          <button className='cursor-pointer bg-purple-500 hover:bg-purple-400 text-white font-semibold text-sm sm:text-lg px-3 py-1 rounded-md mt-3'>CHECK EVENT</button>
+          <button className='box-shadow-pink cursor-pointer bg-[var(--graybase-700)] hover:bg-[var(--graybase-600)] text-white font-semibold text-sm sm:text-lg px-5 py-1 rounded-full mt-3'>CHECK EVENT</button>
         </div>
 
       </div>

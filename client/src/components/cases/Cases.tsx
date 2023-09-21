@@ -1,5 +1,6 @@
-import React, { useEffect, useState, useRef } from 'react'
+import { useEffect, useState, useRef } from 'react'
 import { CSGOCapsulesPack, CSGOMusicKitBox, CSgoWeaponCase } from '../../models/csgoAssets-model';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { SteamItemData } from '../../models/Typos';
 
@@ -12,6 +13,7 @@ const Cases = ({data}: props) => {
     const [itemData, setItemData] = useState<SteamItemData | null>()
     const containerRef = useRef<HTMLDivElement | null>(null);
 
+    const navigate = useNavigate();
 
     useEffect(() => {
         const observerOptions = {
@@ -63,6 +65,9 @@ const Cases = ({data}: props) => {
 
     return (
     <div 
+    onClick={() => {
+      navigate(`/case/${data.name.replace(/ /g, "%20")}`)
+    }}
     ref={containerRef}
     className='bg-[var(--graybase-400)] h-[310px] md:h-[260px] cursor-pointer relative p-3 rounded-md transform flex flex-col justify-center items-center transition-all duration-200 will-change-transform hover:-translate-y-0.5  border border-solid hover:border-yellow-400 border-transparent'>
         <img className='max-h-[120px]' src={data.image} alt="" />
