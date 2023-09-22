@@ -66,7 +66,7 @@ const Cases = ({data}: props) => {
     return (
     <div 
     onClick={() => {
-      navigate(`/case/${data.name.replace(/ /g, "%20")}`)
+      navigate(`/case/${data.id}`)
     }}
     ref={containerRef}
     className='bg-[var(--graybase-400)] h-[310px] md:h-[260px] cursor-pointer relative p-3 rounded-md transform flex flex-col justify-center items-center transition-all duration-200 will-change-transform hover:-translate-y-0.5  border border-solid hover:border-yellow-400 border-transparent'>
