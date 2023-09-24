@@ -1,11 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import Navbar from '../components/layout/Navbar'
-import { CSgoWeaponCase } from '../models/csgoAssets-model'
+import { CSgoWeaponCase, CSgoWeaponSkin } from '../models/csgoAssets-model'
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
-import Roulete from '../components/Roulete';
-import McRoulette from '../components/roulete/McRoulette';
-import { weaponAttributes } from '../components/roulete/models/RoulleteModel';
+import Roulete from '../components/roulette/Roulete';
 
 
 
@@ -14,14 +12,51 @@ const CasePage = () => {
 
   const { caseName } = useParams<{ caseName: string }>();
   const [caseData, setCaseData] = useState<CSgoWeaponCase | null>()
+  const [fullList, setFullList] = useState<CSgoWeaponSkin[] | null>()
 
-
-  const weaponsCount = 150
-  const transitionDuration = 10
 
   useEffect(() => {
     fetchData()
   }, [caseName])
+
+  useEffect(() => {
+    reCreateList()
+  }, [caseData])
+
+  const reCreateList = () => {
+
+    const arr: CSgoWeaponSkin[] = []
+
+    caseData?.contains.map((item, i) => {
+      let amount = rarityCheck(item.rarity)
+      for (let i = 0; i < amount; i++) {
+        arr.push(item);
+      }
+    })
+    if (caseData && caseData.contains_rare.length > 0) {
+      arr.push(caseData.contains_rare[Math.floor(Math.random() * caseData.contains_rare.length - 1)])
+      arr.push(caseData.contains_rare[Math.floor(Math.random() * caseData.contains_rare.length - 1)])
+      arr.push(caseData.contains_rare[Math.floor(Math.random() * caseData.contains_rare.length - 1)])
+      
+    }
+    setFullList(arr)
+
+
+  }
+  const rarityCheck = (item: string) => {
+    switch (item) {
+      case "Mil-Spec Grade":
+        return 13
+      case "Restricted":
+        return 6
+      case "Classified":
+        return 3
+      case "Covert":
+        return 2
+      default:
+        return 4
+    }
+  }
 
 
   const fetchData = async () => {
@@ -48,22 +83,13 @@ const CasePage = () => {
         <Navbar />
       </div>
 
-      {caseData ?
+      {fullList ?
         <Roulete
-          data={(caseData.contains.length % 2 === 0)? caseData.contains : caseData.contains.slice(0, -1)}
+          data={(fullList.length % 2 === 0) ? fullList.slice(0, -1) : fullList}
+
         /> :
         <></>
       }
-
-      {/* {caseData? 
-        <McRoulette
-          weapons={caseData?.contains}
-          weaponsCount={weaponsCount}
-          transitionDuration={transitionDuration}
-        />:
-        <></>
-      } */}
-
 
     </>
   )
@@ -71,7 +97,7 @@ const CasePage = () => {
 
 export default CasePage
 
-// {id: 'skin-852832', name: 'Galil AR | Blue Titanium', rarity: 'Mil-Spec Grade', paint_index: '216', image: 'https://steamcdn-a.akamaihd.net/apps/730/icons/eco…arge.4264e8ec1cedb3bce31a89c934c630bd56d480c1.png'},
+// [   {id: 'skin-852832', name: 'Galil AR | Blue Titanium', rarity: 'Mil-Spec Grade', paint_index: '216', image: 'https://steamcdn-a.akamaihd.net/apps/730/icons/eco…arge.4264e8ec1cedb3bce31a89c934c630bd56d480c1.png'},
 // {id: 'skin-197500', name: 'Five-SeveN | Nightshade', rarity: 'Mil-Spec Grade', paint_index: '223', image: 'https://steamcdn-a.akamaihd.net/apps/730/icons/eco…arge.4f94edf6ac032c15fedafa6ba1f2425a4ca8bded.png'},
 // {id: 'skin-1704832', name: 'PP-Bizon | Water Sigil', rarity: 'Mil-Spec Grade', paint_index: '224', image: 'https://steamcdn-a.akamaihd.net/apps/730/icons/eco…arge.c4d0aad9cb87870f84f3709ff3b8ecc9fe489d89.png'},
 // {id: 'skin-2294660', name: 'Nova | Ghost Camo', rarity: 'Mil-Spec Grade', paint_index: '225', image: 'https://steamcdn-a.akamaihd.net/apps/730/icons/eco…arge.d63e06a38ef396a945defd7c1ad9da9ba79fe60d.png'},
@@ -80,3 +106,4 @@ export default CasePage
 // {id: 'skin-655976', name: 'FAMAS | Afterimage', rarity: 'Classified', paint_index: '154', image: 'https://steamcdn-a.akamaihd.net/apps/730/icons/eco…arge.5d45539735d838ffefd26467a8c767b71807c785.png'},
 // {id: 'skin-590732', name: 'AWP | Electric Hive', rarity: 'Classified', paint_index: '227', image: 'https://steamcdn-a.akamaihd.net/apps/730/icons/eco…arge.2189958e2afa2c69cfcdd807124c279a0e645625.png'}
 // ,{id: 'skin-66460', name: 'Desert Eagle | Cobalt Disruption', rarity: 'Classified', paint_index: '231', image: 'https://steamcdn-a.akamaihd.net/apps/730/icons/eco…arge.a486db3160bcdcf6bc5a1d8179c450b02f620151.png'},
+//        ] 

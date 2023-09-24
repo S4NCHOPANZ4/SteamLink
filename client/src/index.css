@@ -9,6 +9,7 @@
     --graybase-500: #2d2d33;
     --graybase-600: #212126;
     --graybase-700: #1C1A24
+
   }
 
 *{
@@ -41,6 +42,57 @@
 .background-lineargradient-green{
   background: linear-gradient(234deg, rgba(86, 197, 74, 0.31) 0%, rgba(37, 206, 11, 0.66) 80%);
 }
+
+
+/* Weapon linear gradient  */
+.background-lineargradient_Base_Grade{
+  background: linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(231,231,231,.5) 100%);
+}
+.background-color_Base_Grade{
+  background-color: rgba(231,231,231,1);
+}
+.background-lineargradient_Industrial_Grade{
+  background: linear-gradient(180deg, rgba(0,0,0,0) 15%, rgba(135,199,255,.3) 100%);
+}
+.background-color_Industrial_Grade{
+  background-color: rgba(135,199,255,1)
+}
+.background-lineargradient_Mil-Spec_High_Grade{
+  background: linear-gradient(180deg, rgba(0,0,0,0) 15%, rgba(17,85,221,.3) 100%);
+}
+.background-color_Mil-Spec_High_Grade{
+  background-color: rgba(17,85,221,1);
+}
+.background-lineargradient_Restricted_Remarkable{
+  background: linear-gradient(180deg, rgba(0,0,0,0) 15%, rgba(136,71,255,.3) 100%);
+}
+.background-color_Restricted_Remarkable{
+  background-color: rgba(136,71,255,1);
+}
+.background-lineargradient_Classified_Exotic{
+  background: linear-gradient(180deg, rgba(0,0,0,0) 15%, rgba(211,44,230,.3) 100%);
+}
+.background-color_Classified_Exotic{
+  background-color: rgba(211,44,230,1);
+}
+.background-lineargradient_Covert_Extraordinary{
+  background: linear-gradient(180deg, rgba(0,0,0,0) 15%, rgba(235,75,75,.3) 100%);
+}
+.background-color_Covert_Extraordinary{
+  background-color: rgba(235,75,75,1)
+}
+.background-lineargradient_Rare_Special{
+  background: linear-gradient(180deg, rgba(0,0,0,0) 15%, rgba(223,187,82,.3) 100%);
+}
+.background-color_Rare_Special{
+  background-color: rgba(223,187,82,1)
+}
+
+
+
+
+
+
 
 .overflowBar ::-webkit-scrollbar {
   width: 5px; /* Ancho de la barra de desplazamiento */

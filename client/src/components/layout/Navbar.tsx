@@ -1,15 +1,14 @@
-import { useState, useEffect } from 'react'
-import { store, useAppSelector } from "../../redux/store"
-import { useAppDispatch } from "../../redux/store"
+import { useState, } from 'react'
+import {  useAppSelector } from "../../redux/store"
+// import { useAppDispatch } from "../../redux/store"
 import { FaWallet } from "react-icons/fa"
 import { FaAngleDown, FaAngleUp } from "react-icons/fa"
 import { CgLogOff } from "react-icons/cg"
 
-import axios from 'axios';
 
 const Navbar = () => {
 
-    const dispatch = useAppDispatch();
+    // const dispatch = useAppDispatch();
     const [redirecting, setRedirecting] = useState(false);
     const userData = useAppSelector((state) => state.user);
     const [loadingPFP, setLoadingPFP] = useState(true);

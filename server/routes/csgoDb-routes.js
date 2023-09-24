@@ -7,6 +7,41 @@ const catchAsyncErrors = require("../middleware/catchAsyncErrors.js");
 const steamUrls = require("../SteamUrl.js");
 const axios = require("axios");
 
+//==================fetch cs item================
+
+
+
+router.post(
+  "/data/itemData",
+  catchAsyncErrors(async (req, res, next) => {
+    const { item_id } = req.body 
+
+    try {
+      const response = await axios.get(
+          `https://cs2-api.vercel.app/api/items?id=${item_id}`
+        );
+      if(response.data){
+        res.status(201).json({
+          success: true,
+          data: response.data,
+        });
+      }else{
+        res.status(404).json({
+          success: false,
+          data: {
+            user: 'NotFound err 404 chech api https://cs2-api.vercel.app'
+          },
+        });
+      }
+      
+    } catch (error) {
+      return next(new ErrorHandler(error.message, 500));
+
+    }
+  })
+);
+
+
 
 //=================get cases=================
 router.get(
