@@ -23,13 +23,20 @@ const RouletteItem = ({ item, center }: props) => {
     if(item){
       setSkinName( item?.name.split(' '))
     }else{
-      
+      return
     }
   }, [item])
 
 
   const rarityCheck = (item: string) => {
     switch (item) {
+
+      case "Consumer Grade":
+        return {
+          bgColor: "background-color_Base_Grade",
+          linearGradient: "background-lineargradient_Industrial_Grade"
+        }
+
       case "Mil-Spec Grade":
         return {
           bgColor: "background-color_Mil-Spec_High_Grade",
@@ -60,9 +67,9 @@ const RouletteItem = ({ item, center }: props) => {
 
 
   return (
-    <div className={`${bgColor?.linearGradient} relative w-[190px] h-full flex items-center justify-center bg-gray-50 mx-[.09rem]`}>
+    <div  className={`${bgColor?.linearGradient} relative w-[190px] h-full flex items-center justify-center  mx-[.09rem] `}>
       <img
-        className={`h-[55%] ${center ? "bg-green-500" : ""}`}
+        className={`h-[55%] ${center ? "" : ""}`}
         src={item?  item.image: ""}
         alt="asd"
       />

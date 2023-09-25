@@ -4,8 +4,7 @@ import { CSgoWeaponCase, CSgoWeaponSkin } from '../models/csgoAssets-model'
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import Roulete from '../components/roulette/Roulete';
-
-
+import '../components/roulette/styles.css'
 
 
 const CasePage = () => {
@@ -13,6 +12,7 @@ const CasePage = () => {
   const { caseName } = useParams<{ caseName: string }>();
   const [caseData, setCaseData] = useState<CSgoWeaponCase | null>()
   const [fullList, setFullList] = useState<CSgoWeaponSkin[] | null>()
+  const [loaded, setLoaded] = useState<boolean>(false)
 
 
   useEffect(() => {
@@ -36,8 +36,7 @@ const CasePage = () => {
     if (caseData && caseData.contains_rare.length > 0) {
       arr.push(caseData.contains_rare[Math.floor(Math.random() * caseData.contains_rare.length - 1)])
       arr.push(caseData.contains_rare[Math.floor(Math.random() * caseData.contains_rare.length - 1)])
-      arr.push(caseData.contains_rare[Math.floor(Math.random() * caseData.contains_rare.length - 1)])
-      
+
     }
     setFullList(arr)
 
@@ -45,28 +44,79 @@ const CasePage = () => {
   }
   const rarityCheck = (item: string) => {
     switch (item) {
+      case "Consumer Grade":
+        return 50
       case "Mil-Spec Grade":
-        return 13
+        return 20
       case "Restricted":
-        return 6
+        return 10
       case "Classified":
-        return 3
+        return 5
       case "Covert":
-        return 2
+        return 3
       default:
         return 4
+    }
+  }
+
+  const rarityCheckColor = (item: string) => {
+    switch (item) {
+
+      case "Consumer Grade":
+        return {
+          bgColor: "background-color_Base_Grade",
+          linearGradient: "background-lineargradient_Industrial_Grade",
+          cardBd: "cardBg_Base_Grade"
+        }
+
+      case "Mil-Spec Grade":
+        return {
+          bgColor: "background-color_Mil-Spec_High_Grade",
+          linearGradient: "background-lineargradient_Mil-Spec_High_Grade",
+          cardBd: "cardBg_Mil-Spec_High_Grade"
+        }
+      case "Restricted":
+        return {
+          bgColor: "background-color_Restricted_Remarkable",
+          linearGradient: "background-lineargradient_Restricted_Remarkable",
+          cardBd: "cardBg_Restricted_Remarkable"
+
+        }
+      case "Classified":
+        return {
+          bgColor: "background-color_Classified_Exotic",
+          linearGradient: "background-lineargradient_Classified_Exotic",
+          cardBd: "cardBg_Classified_Exotic"
+
+        }
+      case "Covert":
+        return {
+          bgColor: "background-color_Covert_Extraordinary",
+          linearGradient: "background-lineargradient_Covert_Extraordinary",
+          cardBd: "cardBg_Covert_Extraordinary"
+
+        }
+      default:
+        return {
+          bgColor: "background-color_Mil-Spec_High_Grade",
+          linearGradient: "background-lineargradient_Mil-Spec_High_Grade",
+          cardBd: "cardBg_Mil-Spec_High_Grade"
+
+        }
     }
   }
 
 
   const fetchData = async () => {
     if (caseName) {
+      setLoaded(false)
       try {
         const response = await axios.post<{ success: boolean, data: CSgoWeaponCase }>('http://localhost:3001/assets/data/itemData',
           {
             item_id: caseName.replace(/ /g, "%20")
           });
         if (response.data.success) {
+          setLoaded(true)
           setCaseData(response.data.data)
           console.log(response.data.data);
         }
@@ -77,19 +127,55 @@ const CasePage = () => {
     }
 
   }
+
+
   return (
     <>
       <div>
         <Navbar />
       </div>
 
-      {fullList ?
-        <Roulete
-          data={(fullList.length % 2 === 0) ? fullList.slice(0, -1) : fullList}
+      {
+        loaded ?
 
-        /> :
-        <></>
+          fullList ?
+            <Roulete
+              type={caseData?.type}
+              data={(fullList.length % 2 === 0) ? fullList.slice(0, -1) : fullList}
+
+            /> :
+            <div className='mt-10  max-w-[1300px] h-[200px] m-auto rounded-lg box-shadow-yellow flex items-center justify-center'>
+              <div className='spiner_special_small' />
+            </div>
+
+          :
+          <div className='mt-10  max-w-[1300px] h-[200px] m-auto rounded-lg box-shadow-yellow flex items-center justify-center'>
+            <div className='spiner_special_small' />
+          </div>
       }
+
+      <div className='my-10   max-w-[1300px] m-auto  p-2 rounded-md'>
+      <div className='mb-3 flex items-center justify-center'>
+        <h1 className='text-zinc-300 text-2xl font-bold border-b-2 border-yellow-400'>CASES CONTENTS</h1>
+      </div>
+        <div className='grid gap-2 grid-cols-2 md:grid-cols-5 mt-2'>
+          {caseData && caseData.contains.map((data, i) => {
+            return (
+              <div key={i} className='h-[150px] overflow-hidden relative flex flex-col items-center justify-center bg-[var(--graybase-900)] border-2 border-zinc-500 rounded-lg'>
+                <div className='absolute z-20 flex flex-col items-center justify-center'>
+                  <img src={data.image} alt="" className='h-[90px]' />
+                  <h1 className='text-zinc-400 text-center font-semibold mt-1 text-sm'>{data.name}</h1>
+                </div>
+
+                <div className={`absolute h-full w-1 left-0 ${rarityCheckColor(data.rarity).bgColor}`}></div>
+                <div
+
+                  className={`absolute cardBg_Base_Grade cardBg_md z-10 ${rarityCheckColor(data.rarity).cardBd}`} />
+              </div>)
+          })}
+        </div>
+      </div>
+
 
     </>
   )

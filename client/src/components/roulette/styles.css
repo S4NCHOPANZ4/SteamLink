@@ -1,0 +1,101 @@
+
+  .cardBg_Base_Grade {
+    width: 30px;
+    height: calc(30px*1.732);
+    display: grid;
+    background:
+      linear-gradient(rgba(231, 231, 231, 0.7) 0 0) top   /100% 1px,
+      linear-gradient(rgba(231, 231, 231, 0.7) 0 0) bottom/100% 1px,
+      linear-gradient(to bottom right, #0000 calc(50% - 2px),rgba(231, 231, 231, 0.7) calc(50% - 1px),#0000 50%) top/100% calc(100% + 2px),
+      linear-gradient(to bottom left , #0000 calc(50% - 2px),rgba(231, 231, 231, 0.7) calc(50% - 1px),#0000 50%) top/100% calc(100% + 2px); 
+    background-repeat: no-repeat;
+    animation: h7 8s infinite linear;
+  }
+  .cardBg_Industrial_Grade {
+    width: 30px;
+    height: calc(30px*1.732);
+    display: grid;
+    background:
+      linear-gradient(rgba(135, 199, 255, .7) 0 0) top   /100% 1px,
+      linear-gradient(rgba(135, 199, 255, .7) 0 0) bottom/100% 1px,
+      linear-gradient(to bottom right, #0000 calc(50% - 2px),rgba(135, 199, 255, .7) calc(50% - 1px),#0000 50%) top/100% calc(100% + 2px),
+      linear-gradient(to bottom left , #0000 calc(50% - 2px),rgba(135, 199, 255, .7) calc(50% - 1px),#0000 50%) top/100% calc(100% + 2px); 
+    background-repeat: no-repeat;
+    animation: h7 8s infinite linear;
+  }
+  .cardBg_Mil-Spec_High_Grade {
+    width: 30px;
+    height: calc(30px*1.732);
+    display: grid;
+    background:
+      linear-gradient(rgba(17, 85, 221, .9) 0 0) top   /100% 1px,
+      linear-gradient(rgba(17, 85, 221, .9)0 0) bottom/100% 1px,
+      linear-gradient(to bottom right, #0000 calc(50% - 2px),rgba(17, 85, 221, .9) calc(50% - 1px),#0000 50%) top/100% calc(100% + 2px),
+      linear-gradient(to bottom left , #0000 calc(50% - 2px),rgba(17, 85, 221, .9) calc(50% - 1px),#0000 50%) top/100% calc(100% + 2px); 
+    background-repeat: no-repeat;
+    animation: h7 8s infinite linear;
+  }
+  .cardBg_Restricted_Remarkable {
+    width: 30px;
+    height: calc(30px*1.732);
+    display: grid;
+    background:
+      linear-gradient(rgba(136, 71, 255, .8) 0 0) top   /100% 1px,
+      linear-gradient(rgba(136, 71, 255, .8)0 0) bottom/100% 1px,
+      linear-gradient(to bottom right, #0000 calc(50% - 2px),rgba(136, 71, 255, .8) calc(50% - 1px),#0000 50%) top/100% calc(100% + 2px),
+      linear-gradient(to bottom left , #0000 calc(50% - 2px),rgba(136, 71, 255, .8) calc(50% - 1px),#0000 50%) top/100% calc(100% + 2px); 
+    background-repeat: no-repeat;
+    animation: h7 8s infinite linear;
+  }
+  .cardBg_Classified_Exotic {
+    width: 30px;
+    height: calc(30px*1.732);
+    display: grid;
+    background:
+      linear-gradient(rgba(211, 44, 230, .8) 0 0) top   /100% 1px,
+      linear-gradient(rgba(211, 44, 230, .8) 0 0) bottom/100% 1px,
+      linear-gradient(to bottom right, #0000 calc(50% - 2px),rgba(211, 44, 230, .8) calc(50% - 1px),#0000 50%) top/100% calc(100% + 2px),
+      linear-gradient(to bottom left , #0000 calc(50% - 2px),rgba(211, 44, 230, .8) calc(50% - 1px),#0000 50%) top/100% calc(100% + 2px); 
+    background-repeat: no-repeat;
+    animation: h7 8s infinite linear;
+  }
+  .cardBg_Covert_Extraordinary {
+    width: 30px;
+    height: calc(30px*1.732);
+    display: grid;
+    background:
+      linear-gradient(rgba(235, 75, 75, .8) 0 0) top   /100% 1px,
+      linear-gradient(rgba(235, 75, 75, .8) 0 0) bottom/100% 1px,
+      linear-gradient(to bottom right, #0000 calc(50% - 2px),rgba(235, 75, 75, .8) calc(50% - 1px),#0000 50%) top/100% calc(100% + 2px),
+      linear-gradient(to bottom left , #0000 calc(50% - 2px),rgba(235, 75, 75, .8) calc(50% - 1px),#0000 50%) top/100% calc(100% + 2px); 
+    background-repeat: no-repeat;
+    animation: h7 8s infinite linear;
+  }
+  .cardBg_Covert_Rare_Special {
+    width: 30px;
+    height: calc(30px*1.732);
+    display: grid;
+    background:
+      linear-gradient(rgba(223, 187, 82, .8) 0 0) top   /100% 1px,
+      linear-gradient(rgba(223, 187, 82, .8) 0 0) bottom/100% 1px,
+      linear-gradient(to bottom right, #0000 calc(50% - 2px),rgba(223, 187, 82, .8) calc(50% - 1px),#0000 50%) top/100% calc(100% + 2px),
+      linear-gradient(to bottom left , #0000 calc(50% - 2px),rgba(223, 187, 82, .8) calc(50% - 1px),#0000 50%) top/100% calc(100% + 2px); 
+    background-repeat: no-repeat;
+    animation: h7 8s infinite linear;
+  }
+  .cardBg_md::before,
+  .cardBg_md::after {
+    content: "";
+    grid-area: 1/1;
+    background: inherit;
+    border:inherit;
+    animation: inherit;
+  }
+  
+  .cardBg_md::after {
+    animation-duration: 4s;
+  }
+  
+  @keyframes h7 {
+    100% {transform: rotate(1turn)}
+  }

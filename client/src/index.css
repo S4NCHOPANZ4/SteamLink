@@ -3,89 +3,121 @@
 @tailwind utilities;
 
 :root {
-    --graybase-200: #57575f;
-    --graybase-300: #44444b;
-    --graybase-400: #36363c;
-    --graybase-500: #2d2d33;
-    --graybase-600: #212126;
-    --graybase-700: #1C1A24
-
-  }
-
-*{
-    font-family: 'Nunito', sans-serif;
+  --graybase-200: #57575f;
+  --graybase-300: #44444b;
+  --graybase-400: #36363c;
+  --graybase-500: #2d2d33;
+  --graybase-600: #212126;
+  --graybase-700: #1C1A24
 }
+
+* {
+  font-family: 'Nunito', sans-serif;
+}
+
+html{
+  background-color: var(--graybase-700);
+}
+
 .loader_mini {
-    margin: auto;
-    border: 3px solid #b4b4b43e;
-    border-radius: 50%;
-    border-top: 3px solid rgb(237, 196, 11);
-    width: 20px;
-    height: 20px;
-    animation: spinner 1s linear infinite;
+  margin: auto;
+  border: 3px solid #b4b4b43e;
+  border-radius: 50%;
+  border-top: 3px solid rgb(237, 196, 11);
+  width: 20px;
+  height: 20px;
+  animation: spinner 1s linear infinite;
 }
 
 @keyframes spinner {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
-.box-shadow-yellow{
-    box-shadow: rgba(222, 170, 29, 0.5) 0px 0px 0.25em, rgba(222, 170, 29, 0.23) 0px 0.25em 1em;
+.box-shadow-yellow {
+  box-shadow: rgba(222, 170, 29, 0.5) 0px 0px 0.25em, rgba(222, 170, 29, 0.23) 0px 0.25em 1em;
 }
-.box-shadow-pink{
+
+.box-shadow-pink {
   box-shadow: rgba(125, 17, 192, 0.5) 0px 0px 0.25em, rgba(194, 47, 231, 0.23) 0px 0.25em 1em;
 }
-.background-lineargradient{
+
+.background-lineargradient {
   background: linear-gradient(234deg, rgba(61, 61, 61, 0.76) 0%, rgba(57, 0, 76, 0.322) 80%);
 }
-.background-lineargradient-green{
-  background: linear-gradient(234deg, rgba(86, 197, 74, 0.31) 0%, rgba(37, 206, 11, 0.66) 80%);
+
+.background-lineargradient-green {
+  background: linear-gradient(234deg, rgba(86, 197, 74, 0.31) 0%, rgba(37, 206, 11, 0.66) 100%);
 }
 
+.background-lineargradient-blue {
+  background: linear-gradient(234deg, rgba(61, 61, 61, 0.76) 0%, rgba(0, 13, 76, 0.612) 80%);
+}
+
+.background-lineargradient-gray {
+  background: linear-gradient(234deg, rgba(61, 61, 61, 0.76) 0%, rgba(78, 78, 78, 0.612) 80%);
+}
 
 /* Weapon linear gradient  */
-.background-lineargradient_Base_Grade{
-  background: linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(231,231,231,.5) 100%);
+.background-lineargradient_Base_Grade {
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgba(231, 231, 231, .5) 100%);
 }
-.background-color_Base_Grade{
-  background-color: rgba(231,231,231,1);
+
+.background-color_Base_Grade {
+  background-color: rgba(231, 231, 231, 0.7);
 }
-.background-lineargradient_Industrial_Grade{
-  background: linear-gradient(180deg, rgba(0,0,0,0) 15%, rgba(135,199,255,.3) 100%);
+
+.background-lineargradient_Industrial_Grade {
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0) 15%, rgba(135, 199, 255, .3) 100%);
 }
-.background-color_Industrial_Grade{
-  background-color: rgba(135,199,255,1)
+
+.background-color_Industrial_Grade {
+  background-color: rgba(135, 199, 255, .7)
 }
-.background-lineargradient_Mil-Spec_High_Grade{
-  background: linear-gradient(180deg, rgba(0,0,0,0) 15%, rgba(17,85,221,.3) 100%);
+
+.background-lineargradient_Mil-Spec_High_Grade {
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0) 15%, rgba(17, 85, 221, .3) 100%);
 }
-.background-color_Mil-Spec_High_Grade{
-  background-color: rgba(17,85,221,1);
+
+.background-color_Mil-Spec_High_Grade {
+  background-color: rgba(17, 85, 221, .9);
 }
-.background-lineargradient_Restricted_Remarkable{
-  background: linear-gradient(180deg, rgba(0,0,0,0) 15%, rgba(136,71,255,.3) 100%);
+
+.background-lineargradient_Restricted_Remarkable {
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0) 15%, rgba(136, 71, 255, .3) 100%);
 }
-.background-color_Restricted_Remarkable{
-  background-color: rgba(136,71,255,1);
+
+.background-color_Restricted_Remarkable {
+  background-color: rgba(136, 71, 255, .8);
 }
-.background-lineargradient_Classified_Exotic{
-  background: linear-gradient(180deg, rgba(0,0,0,0) 15%, rgba(211,44,230,.3) 100%);
+
+.background-lineargradient_Classified_Exotic {
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0) 15%, rgba(211, 44, 230, .3) 100%);
 }
-.background-color_Classified_Exotic{
-  background-color: rgba(211,44,230,1);
+
+.background-color_Classified_Exotic {
+  background-color: rgba(211, 44, 230, .8);
 }
-.background-lineargradient_Covert_Extraordinary{
-  background: linear-gradient(180deg, rgba(0,0,0,0) 15%, rgba(235,75,75,.3) 100%);
+
+.background-lineargradient_Covert_Extraordinary {
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0) 15%, rgba(235, 75, 75, .3) 100%);
 }
-.background-color_Covert_Extraordinary{
-  background-color: rgba(235,75,75,1)
+
+.background-color_Covert_Extraordinary {
+  background-color: rgba(235, 75, 75, .8)
 }
-.background-lineargradient_Rare_Special{
-  background: linear-gradient(180deg, rgba(0,0,0,0) 15%, rgba(223,187,82,.3) 100%);
+
+.background-lineargradient_Rare_Special {
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0) 15%, rgba(223, 187, 82, .3) 100%);
 }
-.background-color_Rare_Special{
-  background-color: rgba(223,187,82,1)
+
+.background-color_Rare_Special {
+  background-color: rgba(223, 187, 82, .8)
 }
 
 
@@ -95,33 +127,41 @@
 
 
 .overflowBar ::-webkit-scrollbar {
-  width: 5px; /* Ancho de la barra de desplazamiento */
+  width: 5px;
+  /* Ancho de la barra de desplazamiento */
 }
 
 .overflowBar ::-webkit-scrollbar-thumb {
-  background-color: #555; /* Color del pulgar de la barra de desplazamiento */
-  border-radius: 6px; /* Esquinas redondeadas del pulgar */
+  background-color: #555;
+  /* Color del pulgar de la barra de desplazamiento */
+  border-radius: 6px;
+  /* Esquinas redondeadas del pulgar */
 }
 
 .overflowBar ::-webkit-scrollbar-thumb:hover {
-  background-color: #333; /* Color del pulgar de la barra de desplazamiento al pasar el cursor sobre él */
+  background-color: #333;
+  /* Color del pulgar de la barra de desplazamiento al pasar el cursor sobre él */
 }
 
 .overflowBar {
-  scrollbar-width: thin; /* thin, auto o none */
-  scrollbar-color: #888 #f1f1f1; /* color del pulgar color de la pista */
+  scrollbar-width: thin;
+  /* thin, auto o none */
+  scrollbar-color: #888 #f1f1f1;
+  /* color del pulgar color de la pista */
 }
 
 .overflowBar :hover ::-webkit-scrollbar-thumb {
-  background-color: #555; /* Cambia el color del pulgar al pasar el cursor sobre el contenedor */
+  background-color: #555;
+  /* Cambia el color del pulgar al pasar el cursor sobre el contenedor */
 }
-.mySwiper .swiper-pagination-progressbar-fill{
+
+.mySwiper .swiper-pagination-progressbar-fill {
   background-color: rgba(222, 171, 29, 0.282);
 }
 
-.animatedBackgound{
+.animatedBackgound {
   background-position: center;
-  background-size:cover;
+  background-size: cover;
   -webkit-animation: slidein 70s;
   animation: slidein 70s;
 
@@ -132,16 +172,122 @@
   animation-iteration-count: infinite;
 
   -webkit-animation-direction: alternate;
-  animation-direction: alternate;      
+  animation-direction: alternate;
 }
+
 @-webkit-keyframes slidein {
-  from {background-position: center; background-size:3000px; }
-  to {background-position: -100px 0px;background-size:2750px;}
+  from {
+    background-position: center;
+    background-size: 3000px;
   }
-  
-  @keyframes slidein {
-  from {background-position: center;background-size:3000px; }
-  to {background-position: -100px 0px;background-size:2750px;}
-  
+
+  to {
+    background-position: -100px 0px;
+    background-size: 2750px;
   }
-  
+}
+
+@keyframes slidein {
+  from {
+    background-position: center;
+    background-size: 3000px;
+  }
+
+  to {
+    background-position: -100px 0px;
+    background-size: 2750px;
+  }
+
+}
+
+
+/* LOader ===================================================================== */
+.spiner_special_small {
+  width: 25px;
+  height: 25px;
+  display: grid;
+  border: 2px solid #ffea0000;
+  border-radius: 50%;
+  border-color: #ffb70080 #0000;
+  animation: s6 2s infinite linear;
+}
+
+.spiner_special_small::before,
+.spiner_special_small::after {
+  content: "";
+  grid-area: 1/1;
+  margin: 1px;
+  border: inherit;
+  border-radius: 50%;
+}
+
+.spiner_special_small::before {
+  border-color: #ffb700 #0000;
+  animation: inherit;
+  animation-duration: 1s;
+  animation-direction: reverse;
+}
+
+.spiner_special_small::after {
+  margin: 4px;
+}
+
+@keyframes s6 {
+  100% {
+    transform: rotate(1turn)
+  }
+}
+/* ========================================================================= */
+
+.dot-loader {
+  width: 22.5px;
+  height: 20px;
+  --c: linear-gradient(#F4F4F4 calc(50% - 5px), #0000 0 calc(50% + 5px), #F4F4F4 0);
+  background:
+    var(--c) 0% 100%,
+    var(--c) 50% 100%,
+    var(--c) 100% 100%;
+  background-size: 4.5px calc(200% + 10px);
+  background-repeat: no-repeat;
+  animation: b4 1s infinite linear;
+}
+
+@keyframes b4 {
+  33% {
+    background-position: 0% 50%, 50% 100%, 100% 100%
+  }
+
+  50% {
+    background-position: 0% 0%, 50% 50%, 100% 100%
+  }
+
+  66% {
+    background-position: 0% 0%, 50% 0%, 100% 50%
+  }
+
+  100% {
+    background-position: 0% 0%, 50% 0%, 100% 0%
+  }
+}
+
+/* =================================================================== */
+.loader-dot {
+  width:25px;
+  height:12px;
+  background: 
+    radial-gradient(circle closest-side,#F4F4F4 90%,#0000) 0%   50%,
+    radial-gradient(circle closest-side,#F4F4F4 90%,#0000) 50%  50%,
+    radial-gradient(circle closest-side,#F4F4F4 90%,#0000) 100% 50%;
+  background-size:calc(100%/3) 6px;
+  background-repeat: no-repeat;
+  animation:d3 0.5s infinite linear;
+}
+@keyframes d3 {
+    20%{background-position:0%   0%, 50%  50%,100%  50%}
+    40%{background-position:0% 100%, 50%   0%,100%  50%}
+    60%{background-position:0%  50%, 50% 100%,100%   0%}
+    80%{background-position:0%  50%, 50%  50%,100% 100%}
+}
+
+/* //================================================================================= */
+
