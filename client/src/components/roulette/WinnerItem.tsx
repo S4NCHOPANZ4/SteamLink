@@ -49,7 +49,7 @@ const WinnerItem = ({ item, wear }: props) => {
     const [skinName, setSkinName] = useState<String[] | null>()
 
     useEffect(() => {
-        setSkinName(item?.name.split(' '))
+        setSkinName(item?.name.split('|'))
     }, [])
 
 

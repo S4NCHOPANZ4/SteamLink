@@ -21,7 +21,7 @@ const RouletteItem = ({ item, center }: props) => {
   useEffect(() => {
     setBgColor(rarityCheck(item?.rarity? item?.rarity: 's'))
     if(item){
-      setSkinName( item?.name.split(' '))
+      setSkinName( item?.name.split('|'))
     }else{
       return
     }

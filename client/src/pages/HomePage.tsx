@@ -128,14 +128,7 @@ const HomePage = () => {
             </div>
 
             {/* Music */}
-            <div className='mt-20 overflowBar'>
-                <div className='w-[95%] md:w-[85%] m-auto mb-3'>
-                    <h1 className='text-white font-bold text-md md:text-2xl'>ALL CS MUSIC KITS </h1>
-                </div>
-                {musicsData &&
-                    <DisplayCases dataCases={musicsData} />
-                }
-            </div>
+
             {/* Souvenir */}
 
             <div className='mt-20 overflowBar'>
