@@ -74,8 +74,8 @@ const RouletteItem = ({ item, center }: props) => {
         alt="asd"
       />
       <div className={`absolute  w-full bottom-1 left-1`}>
-        <h1 className='text-[.8rem] text-zinc-400 font-bold'>{skinName ? skinName[0] : ''}</h1>
-        <h1 className='text-[1rem] text-zinc-200 font-bold'>{skinName ? skinName[skinName.length - 1] : ''}</h1>
+        <h1 className='text-[.7rem] text-zinc-400 font-bold '>{skinName ? skinName[0] : ''}</h1>
+        <h1 className='text-[.9rem] text-zinc-200 font-bold'>{skinName ? skinName[skinName.length - 1] : ''}</h1>
       </div>
     </div>
   )

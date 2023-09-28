@@ -30,7 +30,7 @@ const breakpoints = {
 
 const DisplayCases = ({ dataCases }: props) => {
   return (
-    <div className='box-shadow-yellow w-[90%] md:w-[85%] m-auto p-3 bg-[var(--graybase-500)] rounded-md'>
+    <div className=' w-[90%] md:w-[85%] m-auto p-3 rounded-md'>
       <Swiper
         breakpoints={breakpoints}
 
@@ -38,7 +38,7 @@ const DisplayCases = ({ dataCases }: props) => {
           type: 'progressbar',
         }}
         modules={[Pagination]}
-        className="mySwiper p-3 bg-[var(--graybase-500)] "
+        className="mySwiper p-3 "
       >
         {
           dataCases && dataCases.map((data, i) => {

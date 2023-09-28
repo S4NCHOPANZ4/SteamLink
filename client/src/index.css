@@ -12,7 +12,7 @@
 }
 
 * {
-  font-family: 'Nunito', sans-serif;
+  font-family: 'Montserrat', sans-serif;
 }
 
 html{
@@ -287,3 +287,11 @@ html{
 
 /* //================================================================================= */
 
+.border-poligon{
+  -webkit-clip-path: polygon(90% 0, 100% 50%, 90% 100%, 10% 100%, 0 50%, 10% 0);
+  clip-path: polygon(90% 0, 100% 50%, 90% 100%, 10% 100%, 0 50%, 10% 0);
+}
+.border-poligon-5{
+  -webkit-clip-path: polygon(5% 0, 95% 0, 100% 15%, 100% 85%, 95% 100%, 5% 100%, 0 85%, 0 15%);
+clip-path: polygon(5% 0, 95% 0, 100% 15%, 100% 85%, 95% 100%, 5% 100%, 0 85%, 0 15%);
+}

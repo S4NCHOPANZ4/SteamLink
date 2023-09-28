@@ -62,9 +62,9 @@ const WinnerItem = ({ item, wear }: props) => {
             <div className='h-full w-[200px] m-auto relative flex items-center justify-center  rounded-lg top-[6rem] box-shadow-yellow bg-[var(--graybase-700)] overflow-hidden'>
                 <img src={item?.image} alt="" />
                 <div className={`absolute w-full h-2 bottom-0 ${item?.rarity ? rarityCheck(item.rarity).bgColor : 'background-color_Mil-Spec_High_Grade'}`}></div>
-                <div className={`absolute  w-full bottom-2 left-2`}>
-                    <h1 className='text-[.8rem] text-zinc-400 font-bold'>{skinName ? skinName[0] : ''}</h1>
-                    <h1 className='text-[1rem] text-zinc-200 font-bold'>{skinName ? skinName[skinName.length - 1] : ''}</h1>
+                <div className={`absolute  w-full bottom-3 left-2`}>
+                    <h1 className='text-[.7rem] text-zinc-400 font-bold'>{skinName ? skinName[0] : ''}</h1>
+                    <h1 className='text-[.9rem] text-zinc-200 font-bold'>{skinName ? skinName[skinName.length - 1] : ''}</h1>
                 </div>
                 <div className='absolute top-2 right-2 text-zinc-200 font-semibold'>
                     <h1>{wearList[wear]}</h1>

@@ -169,15 +169,15 @@ const Roulete = ({ data, type }: props) => {
       {finished ?
         <div className="mt-20 max-w-[1300px] m-auto flex sm:flex-row  flex-col items-center justify-center">
           <button
-            className="relative sm:mr-2 mb-2 sm:mb-0 background-lineargradient-blue flex items-center justify-center py-2 rounded-md font-semibold text-white min-w-[200px] border-2 border-indigo-400"
+            className="relative sm:mr-2 mb-2 sm:mb-0 background-lineargradient-blue flex items-center text-sm justify-center py-2 rounded-md font-semibold text-white min-w-[200px] border-2 border-indigo-400"
             onClick={() => setClase(true)} >
             {loadedSpecs ?
               <>
-                <MdSell color="white" className="mr-2" />
+                <MdSell color="white" className="mr-2 text-sm" />
                 Sell for ${itemValue?.average_price}
               </>
               :
-              <div className="h-6 flex items-center justify-center">
+              <div className="h-5 flex items-center justify-center">
                 <div className="loader-dot"/>
               </div>
 
@@ -185,7 +185,7 @@ const Roulete = ({ data, type }: props) => {
 
           </button>
           <button
-            className={` py-2 rounded-md font-semibold text-white min-w-[200px] border-2  ${rolling ? "background-lineargradient-gray border-zinc-400" : "background-lineargradient-green border-green-400"}`}
+            className={`text-sm py-2 rounded-md font-semibold text-white min-w-[200px] border-2  ${rolling ? "background-lineargradient-gray border-zinc-400" : "background-lineargradient-green border-green-400"}`}
             onClick={() => { reOpenCase() }} >
             {
               rolling ?
