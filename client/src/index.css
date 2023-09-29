@@ -29,6 +29,16 @@ html{
   animation: spinner 1s linear infinite;
 }
 
+.loader_med {
+  margin: auto;
+  border: 4px solid #b4b4b43e;
+  border-radius: 50%;
+  border-top: 4px solid rgb(237, 196, 11);
+  width: 35px;
+  height: 35px;
+  animation: spinner 1s linear infinite;
+}
+
 @keyframes spinner {
   0% {
     transform: rotate(0deg);
@@ -126,6 +136,10 @@ html{
   background-color: rgba(223, 187, 82, .8)
 }
 
+.background-color-black-white{
+  -webkit-filter: contrast(200%) grayscale(100%) saturate(0%);
+  filter: contrast(200%) grayscale(100%) saturate(0%) blur(1px);
+}
 
 
 

@@ -47,7 +47,8 @@ const Cases = ({ data }: props) => {
   }, []);
 
   const FetchMarketData = async () => {
-
+    console.log(data.name.replace(/ /g, "%20"));
+    
     try {
       const response = await axios.post<{ success: boolean, data: SteamItemData }>('http://localhost:3001/assets/data/getPrice', {
         item: data.name.replace(/ /g, "%20")

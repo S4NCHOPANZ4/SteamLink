@@ -1,65 +1,44 @@
 import { useEffect, useState } from 'react'
 import Navbar from '../components/layout/Navbar'
 import Inventory from '../components/Inventory'
-
-import axios from 'axios';
 import { useAppSelector } from '../redux/store';
 import { CSgoWeaponCase } from '../models/csgoAssets-model';
+import bgAk47 from '../assets/akbg.png'
 
 const ProfilePage = () => {
-    const userData = useAppSelector((state) => state.user);
-    
-    const [caseData, setCaseData] = useState<CSgoWeaponCase[] | null>()
+  const userData = useAppSelector((state) => state.user);
 
-    useEffect(()=>{
-            FetchUserInventory()
-    },[])
-
-    useEffect(()=>{
-      console.log(caseData);
-      
-    },[caseData])
-
-    const FetchUserInventory = async() =>{
-        try {
-            const response = await axios.get<{success: boolean, data: CSgoWeaponCase[]}>('http://localhost:3001/assets/data/cases');
-            
-            console.log(response.data);
-            if(response.data.success){
-              setCaseData(response.data.data)
-
-            }
-            else{
-              setCaseData(null)
-
-            }
-        } catch (error) {
-          console.error('Error al obtener datos del usuario:', error);
-        }
-      };
-      
+  const [caseData, setCaseData] = useState<CSgoWeaponCase[] | null>()
 
 
   return (
     <>
-        <Navbar/>
-        <Inventory/>
-        <div className='h-[350px] overflow-auto'>
+      <div>
+        <Navbar />
+      </div>
+      <div
+      className='relative'
+      >
+        <div style={{ backgroundImage: `url(${bgAk47})`, opacity: .07}} className='absolute h-full w-full -z-0 background-color-black-white'></div>
+        <div  className='absolute h-full w-full -z-10 background-lineargradient-blue'></div>
+        <div
+          className='  max-w-[1300px]  m-auto rounded-lg  flex items-center justify-center flex-col'>
+          <div
+            className='z-30 mt-10 flex justify-center sm:justify-start items-center sm:items-start w-full sm:flex-row flex-col'>
+            <img className='rounded-full h-[160px] w-[160px] border-2 border-zinc-400 p-1' src={userData.avatarfull} alt="ProfileImg" />
+            <div className='flex flex-col items-start justify-center ml-3'>
+              <h1 className='text-zinc-200 font-medium text-2xl mb-10'>{userData.username}</h1>
+              <div className='flex items-center justify-center'>
+                <h1 className='text-emerald-400 font-bold text-2xl'>${userData.balance}</h1>
+                <button className='bg-emerald-400 font-bold text-white w-[100px] text-sm py-2 px-3 border-poligon ml-5'>REFIL</button>
+              </div>
+            </div>
+          </div>
+          <Inventory />
 
-        <div className='grid gap-6 grid-cols-2 md:grid-cols-5'>
-          {
-            caseData?  caseData.map((data, i)=>{
-              return(
-                <div key={i} className='bg-gray-700 cursor-pointer relative   transform flex justify-center items-center transition-all duration-200 will-change-transform hover:-translate-y-0.5 '>
-                  <img src={data.image} alt="" />
-                </div>
-              )
-            })
-            :
-            <></>
-          }
+
         </div>
-        </div>
+      </div>
 
 
     </>

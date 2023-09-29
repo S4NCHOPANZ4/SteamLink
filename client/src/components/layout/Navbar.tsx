@@ -19,6 +19,13 @@ const Navbar = () => {
         setRedirecting(true);
         window.location.href = 'http://localhost:3001/auth/steam'; // Reemplaza con la URL de tu backend
     };
+    const handleDemoAccLogin = () => {
+        // Redirigir al usuario a tu backend para iniciar sesión con Steam
+        setRedirecting(true);
+        
+        window.location.href = 'http://localhost:3001/user/demoAccount'; // Reemplaza con la URL de tu backend
+    };
+
 
 
     return (
@@ -27,7 +34,7 @@ const Navbar = () => {
                 <h1 className="text-white font-bold">PagName</h1>
             </div>
             {
-                (Object.keys(userData).length > 0) ?
+                (userData.username) ?
                     <div className='flex items-center justify-center relative'>
                         <div className='mr-2 sm:block hidden'>
                             <button className='background-lineargradient-green text-white flex items-center justify-center font-semibold py-2 px-3 rounded-lg border-2 border-green-400'>
@@ -37,13 +44,13 @@ const Navbar = () => {
                         </div>
                         <div className="flex justify-end items-center bg-[var(--graybase-500)] md:px-10 px-5 rounded-l-[20px] h-full">
                             <div>
-                                <h1 className="text-white font-bold text-sm md:text-lg">{userData.displayName}</h1>
+                                <h1 className="text-white font-bold text-sm md:text-lg">{userData.username}</h1>
                                 <h1 className="text-white font-semibold mr-3 text-sm md:text-md flex items-center justify-between"><FaWallet /><p className="ml-1">USD$ 0,00</p></h1>
                             </div>
                             <img
                                 style={loadingPFP ? { display: 'none' } : { display: 'block' }}
                                 onLoad={() => setLoadingPFP(false)}
-                                className='h-[35px] w-[35px] md:h-[50px] md:w-[50px] rounded-full' src={userData.steamUser?.avatarfull} alt="pfp" />
+                                className='h-[35px] w-[35px] md:h-[50px] md:w-[50px] rounded-full' src={userData.avatarfull} alt="pfp" />
                             <div
                                 style={loadingPFP ? { display: 'block' } : { display: 'none' }}
                                 className='h-[35px] w-[35px] md:h-[50px] md:w-[50px] rounded-full flex items-center justify-center bg-gray-700'>
@@ -62,9 +69,9 @@ const Navbar = () => {
                                     <img
                                         style={loadingPFP ? { display: 'none' } : { display: 'block' }}
                                         onLoad={() => setLoadingPFP(false)}
-                                        className='h-[35px] w-[35px] md:h-[50px] md:w-[50px] rounded-full' src={userData.steamUser?.avatarfull} alt="pfp" />
+                                        className='h-[35px] w-[35px] md:h-[50px] md:w-[50px] rounded-full' src={userData.avatarfull} alt="pfp" />
                                     <div className='ml-3'>
-                                        <h1 className="text-white font-bold text-sm md:text-lg">{userData.displayName}</h1>
+                                        <h1 className="text-white font-bold text-sm md:text-lg">{userData.username}</h1>
                                     </div>
                                 </div>
                                 <div className='flex items-center justify-center  px-2 py-3 rounded-b-lg'>
@@ -86,11 +93,20 @@ const Navbar = () => {
                     <div className="flex justify-center items-center mr-5">
                         <button
                             onClick={handleSteamLogin}
-                            className="bg-green-400 px-3 py-2 rounded-md font-semibold text-white min-w-[75px]">
+                            className="background-lineargradient-green text-white flex items-center justify-center font-semibold py-2 px-3 rounded-lg border-2 border-green-400">
                             {redirecting ?
                                 <div className='loader_mini'></div>
                                 :
                                 'Login'
+                            }
+                        </button>
+                        <button
+                            onClick={handleDemoAccLogin}
+                            className="ml-2 background-lineargradient-gray text-white flex items-center justify-center font-semibold py-2 px-3 rounded-lg border-2 border-zinc-500">
+                            {redirecting ?
+                                <div className='loader_mini'></div>
+                                :
+                                'Try Demo Account'
                             }
                         </button>
                     </div>

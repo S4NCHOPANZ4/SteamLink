@@ -20,8 +20,10 @@ router.get(
   "/auth/steam/return",
   passport.authenticate("steam", { failureRedirect: "/" }),
   (req, res) => {
+    console.log(req.user);
+    
     res.cookie("userData", JSON.stringify(req.user), { httpOnly: true });
-    res.redirect(`http://localhost:5173/?token=${req.user.steamId}`);
+    res.redirect(`http://localhost:5173/login/${req.user.steamId}`);
   }
 );
 
@@ -71,46 +73,6 @@ router.post(
     }
   })
 );
-//USer Inventory CS:GO by Steam ID
-// router.post(
-//   "/data/userImventory",
-//   catchAsyncErrors(async (req, res, next) => {
-//     const { steamId } = req.body;
-//     console.log(process.env.STEAM_API_KEY, steamId);
-//     const headers = {
-//       'TRN-Api-Key': '3d89263a-f34a-45b9-b014-dc2ce951b96d',
-//       'Accept': 'application/json',
-//       'Accept-Encoding': 'gzip',
-//     };
-    
-//     axios.get('https://public-api.tracker.gg/v2/csgo/standard/profile/steam/76561198447931512', { headers })
-//       .then(response => {
-//         console.log(response.data);
-//       })
-//       .catch(error => {
-//         return next(new ErrorHandler(error.message, 500));
-//       });
-//     // const requestData = {
-//     //   appid: '730',
-//     //   'itemlist[0]': '120',
-//     //   itemorigin: '',
-//     //   steamid: steamId,
-//     //   key: process.env.STEAM_API_KEY
-//     // };
-//     // try {
-//     //   console.log(`${steamUrls.GetPlayerInventoySteamId}`);
-//     //   const response = await axios.get(
-//     //     `${steamUrls.GetPlayerInventoySteamId}`,{
-//     //       params: requestData
-//     //     }
-//     //   );
-//     //   console.log(response.data);
-//     // }
-//     // catch (error) {
-//     //   return next(new ErrorHandler(error.message, 500));
-//     // }
-//     "https://api.steampowered.com/IEconItems_730/GetPlayerItems/v1/?access_token=64882127F2A6712358146C6A1F144FCA&steamid=76561198447931512"
-//   })
-// );
+
 
 module.exports = router;

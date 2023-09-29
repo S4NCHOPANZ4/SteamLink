@@ -1,32 +1,36 @@
 import { useEffect, useState, useRef } from "react";
-import { CSgoWeaponSkin } from "../../models/csgoAssets-model";
+import {  AgentFixed, CSgoWeaponSkin } from "../../models/csgoAssets-model";
 import { useSpring, animated } from '@react-spring/web';
 import RouletteItem from "./RouletteItem";
 import { FaAngleDown, FaAngleUp } from "react-icons/fa"
 import WinnerItem from "./WinnerItem";
 import { MdSell, MdRestartAlt } from "react-icons/md"
+import { BsSaveFill } from "react-icons/bs"
 import { SteamItemData } from "../../models/Typos";
 import axios from "axios";
 
 
 interface props {
-  data: CSgoWeaponSkin[],
+  data: CSgoWeaponSkin[] | AgentFixed[],
   type: string | undefined,
+  caseName: string
 }
 
-const Roulete = ({ data, type }: props) => {
+const Roulete = ({ data, type, caseName }: props) => {
   const divRef = useRef<HTMLDivElement | null>(null);
   const [clase, setClase] = useState<boolean>(false);
-  const [dataList, setDataList] = useState<CSgoWeaponSkin[]>(data);
+  const [dataList, setDataList] = useState<CSgoWeaponSkin[] | AgentFixed[]>(data);
   const [offset, setOffset] = useState<number>(0)
   const [finished, setFinished] = useState<boolean>(false)
   const [rolling, setRolling] = useState<boolean>(false)
   const [itemValue, setItemValue] = useState<SteamItemData | null>()
+  const [caseData, setCaseData] = useState<SteamItemData | null>()
+  const [loadCaseData, setLoadCaseData] = useState<boolean>(false)
   const [skinWear, setSkinWear] = useState<number>(0)
   const [loadedSpecs, setLoadedSpecs] = useState<boolean>(false)
 
 
-  function shuffleArray(array: CSgoWeaponSkin[]) {
+  function shuffleArray(array: CSgoWeaponSkin[] | AgentFixed[]) {
     setOffset((Math.random() * 201) - 100)
     const shuffledArray = [...array];
     for (let i = shuffledArray.length - 1; i > 0; i--) {
@@ -36,15 +40,17 @@ const Roulete = ({ data, type }: props) => {
     setSkinWear(Math.floor(Math.random() * 3))
     return shuffledArray;
   }
-  const FetchMarketData = async () => {
+  const FetchMarketData = async (itemName: string) => {
     setLoadedSpecs(false)
     try {
       const response = await axios.post<{ success: boolean, data: SteamItemData }>('http://localhost:3001/assets/data/getPrice', {
-        item: getWeaponQuality().replace(/ /g, "%20")
+        item: itemName
       });
       if (response.data.success) {
         setLoadedSpecs(true)
         setItemValue(response.data.data)
+        console.log(response.data.data);
+        
       }
       else {
         setLoadedSpecs(true)
@@ -54,15 +60,39 @@ const Roulete = ({ data, type }: props) => {
       console.error('Error al obtener datos del usuario:', error);
     }
   };
+  const FetchMarketCase = async (itemName: string) => {
+    setLoadCaseData(false)
+    try {
+      const response = await axios.post<{ success: boolean, data: SteamItemData }>('http://localhost:3001/assets/data/getPrice', {
+        item: itemName
+      });
+      if (response.data.success) {
+        setLoadCaseData(true)
+        setCaseData(response.data.data)
+        console.log(response.data.data);
+        
+      }
+      else {
+        setLoadCaseData(true)
+        setCaseData(null)
+      }
+    } catch (error) {
+      setCaseData(null)
+      console.error('Error al obtener datos del usuario:', error);
+    }
+  };
   useEffect(() => {
     setDataList(shuffleArray(data));
-
   }, [data]);
+
+useEffect(() => {
+  FetchMarketCase(caseName.replace(/ /g, "%20"))
+},[caseName])
 
   useEffect(() => {
     if (!rolling && clase) {
       setFinished(true)
-      FetchMarketData()
+      FetchMarketData(getWeaponQuality().replace(/ /g, "%20"))
     }
   }, [rolling])
 
@@ -194,8 +224,8 @@ const Roulete = ({ data, type }: props) => {
                 </div>
                 :
                 <div className="flex items-center justify-center">
-                  <MdRestartAlt color="white" className="mr-1" size={20} />
-                  re Open
+                  <BsSaveFill color="white" className="mr-2" size={20} />
+                  Keep
 
                 </div>
             }
@@ -212,11 +242,16 @@ const Roulete = ({ data, type }: props) => {
                   <div className="dot-loader" />
                 </div>
                 :
-                "Open for $4"
+                loadCaseData?
+                `Open for $${caseData?.average_price? caseData?.average_price : 10}`
+                :
+                <div className="h-5 flex items-center justify-center">
+                <div className="loader-dot"/>
+              </div>
             }
           </button>
         </div>
-
+// 
       }
 
     </>

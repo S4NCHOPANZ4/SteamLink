@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from 'react'
-import { CSgoWeaponSkin } from '../../models/csgoAssets-model'
+import  { useEffect, useState } from 'react'
+import { AgentFixed, CSgoWeaponSkin } from '../../models/csgoAssets-model'
 
 
 interface props {
-  item: CSgoWeaponSkin,
+  item: CSgoWeaponSkin | AgentFixed,
   center: boolean
 }
 

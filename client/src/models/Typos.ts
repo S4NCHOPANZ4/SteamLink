@@ -33,6 +33,24 @@ export interface SteamItemData {
     currency: string;
   }
   
-  
+
+export interface InventoryItem {
+    inventoryId?: string;
+    id?: string;
+    name?: string;
+    rarity?: string;
+    image?: string;
+}
+
+export interface UserProfileData {
+    steamid?: string;
+    username?: string;
+    avatar?: string;
+    avatarmedium?: string;
+    avatarfull?: string;
+    balance?: number;
+    Inventory?: InventoryItem[];
+    createdAt?: Date;
+}
   
   

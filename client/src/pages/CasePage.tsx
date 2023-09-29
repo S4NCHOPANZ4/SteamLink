@@ -1,44 +1,62 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import Navbar from '../components/layout/Navbar'
-import { CSgoWeaponCase, CSgoWeaponSkin } from '../models/csgoAssets-model'
+import { Agent, AgentFixed, CSgoWeaponCase, CSgoWeaponSkin, convertAgentsToWeaponSkins } from '../models/csgoAssets-model'
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import Roulete from '../components/roulette/Roulete';
 import RareItemImg from '../assets/rare_item.webp'
 import '../components/roulette/styles.css'
+import Particles from '../components/bg-style-components/Particles';
 
+interface customeCase {
+  contains: AgentFixed[],
+  contains_rare: AgentFixed[],
+  type: string,
+  name: string
+}
 
 const CasePage = () => {
 
   const { caseName } = useParams<{ caseName: string }>();
-  const [caseData, setCaseData] = useState<CSgoWeaponCase | null>()
-  const [fullList, setFullList] = useState<CSgoWeaponSkin[] | null>()
-  const [fullListDisplay, setFullListDisplay] = useState<CSgoWeaponSkin[] | null>()
+  const [caseData, setCaseData] = useState<CSgoWeaponCase | customeCase | null>()
+  const [fullList, setFullList] = useState<CSgoWeaponSkin[] | AgentFixed[] | null>()
+  const [fullListDisplay, setFullListDisplay] = useState<CSgoWeaponSkin[] | AgentFixed[] | null>()
   const [loaded, setLoaded] = useState<boolean>(false)
 
 
   useEffect(() => {
-    fetchDataNormalCase()
-    
+    if (caseName) {
+      switch (caseName) {
+        case "agentCrate":
+          fetchDataAgentCase()
+          return
+        default:
+          fetchDataNormalCase(caseName.replace(/ /g, "%20"))
+      }
+    }
   }, [caseName])
 
   useEffect(() => {
     reCreateList()
   }, [caseData])
 
+  useEffect(() => {
+
+  }, [])
+
   const reCreateList = () => {
 
-    const arr: CSgoWeaponSkin[] = []
-    const arrDisplay: CSgoWeaponSkin[] = []
-    caseData?.contains.map((item, i) => {
+    const arr: CSgoWeaponSkin[] & AgentFixed[] = []
+    const arrDisplay: CSgoWeaponSkin[] & AgentFixed[] = []
+    caseData?.contains.map((item) => {
       let amount = rarityCheck(item.rarity)
       for (let i = 0; i < amount; i++) {
         arr.push(item);
         arrDisplay.push(item);
       }
     })
-    if(caseData && caseData.contains_rare?.length > 0){
-      for (let i = 0; i < caseData.contains_rare.length/2; i++) {
+    if (caseData && caseData.contains_rare?.length > 0) {
+      for (let i = 0; i < caseData.contains_rare.length / 2; i++) {
         arr.push(caseData.contains_rare[i]);
         arrDisplay.push({
           id: 'sdA98DB973KWL8XP1LZ94KJ',
@@ -58,15 +76,15 @@ const CasePage = () => {
   const rarityCheck = (item: string) => {
     switch (item) {
       case "Consumer Grade":
-        return 400
+        return 300
       case "Mil-Spec Grade":
-        return 400
+        return 300
       case "Restricted":
-        return 200
+        return 100
       case "Classified":
-        return 125
+        return 75
       case "Covert":
-        return 70
+        return 30
       default:
         return 4
     }
@@ -117,13 +135,13 @@ const CasePage = () => {
         }
     }
   }
-  const fetchDataNormalCase = async () => {
+  const fetchDataNormalCase = async (itemName: string) => {
     if (caseName) {
       setLoaded(false)
       try {
         const response = await axios.post<{ success: boolean, data: CSgoWeaponCase }>('http://localhost:3001/assets/data/itemData',
           {
-            item_id: caseName.replace(/ /g, "%20")
+            item_id: itemName
           });
         if (response.data.success) {
           setLoaded(true)
@@ -141,13 +159,17 @@ const CasePage = () => {
     if (caseName) {
       setLoaded(false)
       try {
-        const response = await axios.post<{ success: boolean, data: CSgoWeaponCase }>('http://localhost:3001/assets/data/itemData',
-          {
-            item_id: caseName.replace(/ /g, "%20")
-          });
+        const response = await axios.get<{ success: boolean, data: Agent[] }>('http://localhost:3001/assets/data/agents');
         if (response.data.success) {
           setLoaded(true)
-          setCaseData(response.data.data)
+          const fixedSkinType = convertAgentsToWeaponSkins(response.data.data)
+          //conventir a todos por separado con un map y luego mandarlos a caseData
+          setCaseData({
+            contains: fixedSkinType,
+            contains_rare: [],
+            type: "Agent",
+            name: 'AgentCase'
+          })
           console.log(response.data.data);
         }
         else { setCaseData(null) }
@@ -162,31 +184,31 @@ const CasePage = () => {
     const objectCounts: Record<string, number> = {};
 
     inputList.forEach(obj => {
-        const id = obj.id;
+      const id = obj.id;
 
-        if (!uniqueObjects[id]) {
-            uniqueObjects[id] = obj;
-            uniqueObjects[id].percentage = 0;
-        }
+      if (!uniqueObjects[id]) {
+        uniqueObjects[id] = obj;
+        uniqueObjects[id].percentage = 0;
+      }
 
-        if (!objectCounts[id]) {
-            objectCounts[id] = 0;
-        }
+      if (!objectCounts[id]) {
+        objectCounts[id] = 0;
+      }
 
-        objectCounts[id]++;
+      objectCounts[id]++;
     });
 
     const totalObjects = inputList.length;
     for (const id in uniqueObjects) {
-        if (uniqueObjects.hasOwnProperty(id)) {
-          const percentage = (objectCounts[id] / totalObjects) * 100;
-          uniqueObjects[id].percentage = parseFloat(percentage.toFixed(2))
-        }
+      if (uniqueObjects.hasOwnProperty(id)) {
+        const percentage = (objectCounts[id] / totalObjects) * 100;
+        uniqueObjects[id].percentage = parseFloat(percentage.toFixed(2))
+      }
     }
 
     const outputList = Object.values(uniqueObjects);
     return outputList;
-}
+  }
 
 
   return (
@@ -200,7 +222,8 @@ const CasePage = () => {
 
           fullList ?
             <Roulete
-              type={caseData?.type}
+              caseName={caseData?.name? caseData?.name : ""}
+              type={caseData?.type ? caseData?.type : 'agent'}
               data={(fullList.length % 2 === 0) ? fullList.slice(0, -1) : fullList}
 
             /> :
@@ -213,11 +236,12 @@ const CasePage = () => {
             <div className='spiner_special_small' />
           </div>
       }
+        <Particles />
 
-      <div className='my-10   max-w-[1300px] m-auto  p-2 rounded-md'>
-      <div className='mb-3 flex items-center justify-center'>
-        <h1 className='text-zinc-300 text-2xl font-bold border-b-2 border-yellow-400'>CASE CONTENTS</h1>
-      </div>
+      <div className='my-10   max-w-[1300px] m-auto  p-2 rounded-md  overflow-hidden'>
+        <div className='mb-3 flex items-center justify-center'>
+          <h1 className='text-zinc-300 text-2xl font-bold border-b-2 border-yellow-400'>CASE CONTENTS</h1>
+        </div>
         <div className='grid gap-2 grid-cols-2 md:grid-cols-5 mt-2'>
           {fullListDisplay && calculatePercentageForUniqueObjects(fullListDisplay).map((data, i) => {
             return (

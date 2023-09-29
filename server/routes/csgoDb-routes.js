@@ -213,7 +213,33 @@ router.post("/data/getPrice",
     }
   })
 );
+router.get("/data/agents",
+  catchAsyncErrors(async (req, res, next) => {
+    try {
+      const response = await axios.get(
+          `https://bymykel.github.io/CSGO-API/api/en/agents.json`
+        );
+        console.log(response.data);
+      if(response.data){
+        res.status(201).json({
+          success: true,
+          data: response.data,
+        });
+      }else{
+        res.status(404).json({
+          success: false,
+          data: {
+            user: 'NotFound err 404 chech api /api/en/agents.json'
+          },
+        });
+      }
+      
+    } catch (error) {
+      return next(new ErrorHandler(error.message, 500));
 
+    }
+  })
+);
 
 
 

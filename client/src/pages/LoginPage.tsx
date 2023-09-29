@@ -1,25 +1,35 @@
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react'
-import { useNavigate } from "react-router-dom";
+import { useParams } from "react-router-dom";
 
 
 const LoginPage = () => {
-    const [redirecting, setRedirecting] = useState(false);
-    const navigate = useNavigate()
 
-    const handleSteamLogin = () => {
-        // Redirigir al usuario a tu backend para iniciar sesión con Steam
-        setRedirecting(true);
-        window.location.href = 'http://localhost:3001/auth/steam'; // Reemplaza con la URL de tu backend
-    };
+    const { id } = useParams<{ id: string }>();
+    const navigate = useNavigate()
+    
+    useEffect(() => {
+        axios.post('http://localhost:3001/user/createUser',
+        {
+            id: id
+        }
+        , { withCredentials: true })
+          .then(response => {
+            navigate('/')
+          })
+          .catch(error => {
+            console.error('Error al obtener datos de usuario:', error);
+          });
+      }, []);
 
 
     return (
-        <div>
-            {redirecting ? (
-                <p>Redirigiendo a Steam...</p>
-            ) : (
-                <button onClick={handleSteamLogin} className='bg-green-400'>Go to Steam</button>
-            )}
+        <div className='h-[100vh] w-full flex items-center justify-center'>
+            <div className='flex items-center justify-center flex-col'>
+                <div className='loader_med'></div>
+                <h1 className='text-yellow-400 text-lg my-2'>Authenticating...</h1>
+            </div>
         </div>
     )
 }

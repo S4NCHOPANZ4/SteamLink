@@ -4,6 +4,8 @@ const session = require('express-session');
 const cookieParser = require('cookie-parser'); 
 const bodyParser = require('body-parser');
 const cors = require('cors')
+const connectDatabase = require("./db/Database.js");
+
 
 if (process.env.NODE_ENV !== "PRODUCTION") {
   require("dotenv").config({
@@ -37,9 +39,14 @@ passport.deserializeUser((user, done) => {
 });
 const authRoutes = require('./routes/passport-routes');
 const csgoGameAssets = require('./routes/csgoDb-routes');
+const User = require('./routes/userController');
 app.use('/assets', csgoGameAssets);
+app.use('/user', User);
 app.use('/', authRoutes);
 
+
+
+connectDatabase();
 
 // Inicia el servidor
 app.listen(port, () => {
