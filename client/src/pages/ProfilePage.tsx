@@ -17,12 +17,12 @@ const ProfilePage = () => {
         <Navbar />
       </div>
       <div
-      className='relative'
+      className='relative mb-5'
       >
         <div style={{ backgroundImage: `url(${bgAk47})`, opacity: .07}} className='absolute h-full w-full -z-0 background-color-black-white'></div>
         <div  className='absolute h-full w-full -z-10 background-lineargradient-blue'></div>
         <div
-          className='  max-w-[1300px]  m-auto rounded-lg  flex items-center justify-center flex-col'>
+          className='p-10  max-w-[1300px]  m-auto rounded-lg  flex items-center justify-center flex-col'>
           <div
             className='z-30 mt-10 flex justify-center sm:justify-start items-center sm:items-start w-full sm:flex-row flex-col'>
             <img className='rounded-full h-[160px] w-[160px] border-2 border-zinc-400 p-1' src={userData.avatarfull} alt="ProfileImg" />
@@ -30,17 +30,13 @@ const ProfilePage = () => {
               <h1 className='text-zinc-200 font-medium text-2xl mb-10'>{userData.username}</h1>
               <div className='flex items-center justify-center'>
                 <h1 className='text-emerald-400 font-bold text-2xl'>${userData.balance}</h1>
-                <button className='bg-emerald-400 font-bold text-white w-[100px] text-sm py-2 px-3 border-poligon ml-5'>REFIL</button>
+                <button className='bg-emerald-400 hover:bg-emerald-500 font-bold text-white w-[100px] text-sm py-2 px-3 border-poligon ml-5'>REFIL</button>
               </div>
             </div>
           </div>
-          <Inventory />
-
-
         </div>
       </div>
-
-
+      <Inventory />
     </>
   )
 }

@@ -1,13 +1,15 @@
 import { useEffect, useState, useRef } from "react";
-import {  AgentFixed, CSgoWeaponSkin } from "../../models/csgoAssets-model";
+import { AgentFixed, CSgoWeaponSkin } from "../../models/csgoAssets-model";
 import { useSpring, animated } from '@react-spring/web';
 import RouletteItem from "./RouletteItem";
 import { FaAngleDown, FaAngleUp } from "react-icons/fa"
 import WinnerItem from "./WinnerItem";
-import { MdSell, MdRestartAlt } from "react-icons/md"
+import { MdSell } from "react-icons/md"
 import { BsSaveFill } from "react-icons/bs"
-import { SteamItemData } from "../../models/Typos";
+import { SteamItemData, SteamUserData, UserProfileData } from "../../models/Typos";
 import axios from "axios";
+import { useAppDispatch, useAppSelector } from "../../redux/store";
+import { setUser } from "../../redux/slice/user/userSlice";
 
 
 interface props {
@@ -17,7 +19,12 @@ interface props {
 }
 
 const Roulete = ({ data, type, caseName }: props) => {
+
+  const dispatch = useAppDispatch();
+
+
   const divRef = useRef<HTMLDivElement | null>(null);
+  const userData = useAppSelector((state) => state.user);
   const [clase, setClase] = useState<boolean>(false);
   const [dataList, setDataList] = useState<CSgoWeaponSkin[] | AgentFixed[]>(data);
   const [offset, setOffset] = useState<number>(0)
@@ -28,6 +35,8 @@ const Roulete = ({ data, type, caseName }: props) => {
   const [loadCaseData, setLoadCaseData] = useState<boolean>(false)
   const [skinWear, setSkinWear] = useState<number>(0)
   const [loadedSpecs, setLoadedSpecs] = useState<boolean>(false)
+  const [itemAdded, setItemAdded] = useState<boolean>(false)
+  const [selling, setSelling] = useState<boolean>(false)
 
 
   function shuffleArray(array: CSgoWeaponSkin[] | AgentFixed[]) {
@@ -49,8 +58,13 @@ const Roulete = ({ data, type, caseName }: props) => {
       if (response.data.success) {
         setLoadedSpecs(true)
         setItemValue(response.data.data)
-        console.log(response.data.data);
-        
+        if (response.data.data.average_price === undefined || response.data.data.average_price === null) {
+          AddItemToInventory(dataList[Math.floor(dataList.length / 2)], "5")
+
+        } else {
+          AddItemToInventory(dataList[Math.floor(dataList.length / 2)], response.data.data.average_price)
+        }
+
       }
       else {
         setLoadedSpecs(true)
@@ -63,14 +77,13 @@ const Roulete = ({ data, type, caseName }: props) => {
   const FetchMarketCase = async (itemName: string) => {
     setLoadCaseData(false)
     try {
-      const response = await axios.post<{ success: boolean, data: SteamItemData }>('http://localhost:3001/assets/data/getPrice', {
+      const response = await axios.post<{ success: boolean, data: SteamItemData }>(`${import.meta.env.VITE_BACKEND_URL}/assets/data/getPrice`, {
         item: itemName
       });
       if (response.data.success) {
         setLoadCaseData(true)
         setCaseData(response.data.data)
-        console.log(response.data.data);
-        
+
       }
       else {
         setLoadCaseData(true)
@@ -85,14 +98,15 @@ const Roulete = ({ data, type, caseName }: props) => {
     setDataList(shuffleArray(data));
   }, [data]);
 
-useEffect(() => {
-  FetchMarketCase(caseName.replace(/ /g, "%20"))
-},[caseName])
+  useEffect(() => {
+    FetchMarketCase(caseName.replace(/ /g, "%20"))
+  }, [caseName])
 
   useEffect(() => {
     if (!rolling && clase) {
       setFinished(true)
       FetchMarketData(getWeaponQuality().replace(/ /g, "%20"))
+
     }
   }, [rolling])
 
@@ -110,7 +124,6 @@ useEffect(() => {
     },
     onRest: () => {
       setRolling(false)
-      console.log(dataList[Math.floor(dataList.length / 2)]);
     },
     immediate: !clase
   });
@@ -119,6 +132,7 @@ useEffect(() => {
     if (rolling) {
       return
     }
+    if(caseData?.average_price)RemoveFromBalance(caseData?.average_price)
     setClase(true)
   }
 
@@ -154,6 +168,74 @@ useEffect(() => {
     }
   }
 
+  const AddItemToInventory = async (item: CSgoWeaponSkin, value: string) => {
+    setItemAdded(false)
+    try {
+      const response = await axios.post<{ success: boolean, user: UserProfileData }>(`${import.meta.env.VITE_BACKEND_URL}/user/addItem`, {
+        steamId: userData.steamid,
+        newItem: { ...item, value: value }
+      });
+      if (response.data.success) {
+        setItemAdded(true)
+        dispatch(setUser(response.data.user));
+        return
+      }
+      else {
+        setItemAdded(true)
+        return
+      }
+    } catch (error) {
+      setCaseData(null)
+      console.error('Error al obtener datos del usuario:', error);
+    }
+  }
+
+  const SellItem = async () => {
+    if (selling) {
+      return
+    }
+    setSelling(true)
+    try {
+      const response = await axios.post<{ success: boolean, user: UserProfileData }>(`${import.meta.env.VITE_BACKEND_URL}/user/sellLastAdded`, {
+        steamId: userData.steamid,
+      });
+      if (response.data.success) {
+        dispatch(setUser(response.data.user));
+
+        setSelling(false)
+        reOpenCase()
+        return
+      }
+      else {
+        setSelling(false)
+        reOpenCase()
+        return
+      }
+    } catch (error) {
+      setCaseData(null)
+      console.error('Error al obtener datos del usuario:', error);
+      return
+    }
+  }
+  const RemoveFromBalance = async (amount: string) =>{
+    try {
+      const response = await axios.post<{ success: boolean, user: UserProfileData }>(`${import.meta.env.VITE_BACKEND_URL}/user/removeFromBalance`, {
+        steamId: userData.steamid,
+        amount: amount
+      });
+      if (response.data.success) {
+        dispatch(setUser(response.data.user));
+        return
+      }
+      else {
+        return
+      }
+    } catch (error) {
+      setCaseData(null)
+      console.error('Error al obtener datos del usuario:', error);
+      return
+    }
+  }
   return (
     <>
       <div className="mt-10 max-w-[1300px] m-auto">
@@ -203,12 +285,31 @@ useEffect(() => {
             onClick={() => setClase(true)} >
             {loadedSpecs ?
               <>
-                <MdSell color="white" className="mr-2 text-sm" />
-                Sell for ${itemValue?.average_price}
+                {itemAdded ?
+                  <div
+                    onClick={() => { SellItem() }}
+                    className="flex items-center justify-center">
+                    {
+                      selling ?
+                        <div className="h-5 flex items-center justify-center">
+                          <div className="loader-dot" />
+                        </div> :
+                        <>
+                          <MdSell color="white" className="mr-2 text-sm" />
+                          {(itemValue?.average_price === undefined || itemValue?.average_price === null) ? "Sell for $5.00" : `Sell for ${itemValue?.average_price}`}
+                        </>
+                    }
+
+                  </div> :
+                  <div className="h-5 flex items-center justify-center">
+                    <div className="loader-dot" />
+                  </div>
+                }
+
               </>
               :
               <div className="h-5 flex items-center justify-center">
-                <div className="loader-dot"/>
+                <div className="loader-dot" />
               </div>
 
             }
@@ -223,11 +324,16 @@ useEffect(() => {
                   <div className="dot-loader" />
                 </div>
                 :
-                <div className="flex items-center justify-center">
-                  <BsSaveFill color="white" className="mr-2" size={20} />
-                  Keep
+                itemAdded ?
+                  <div className="flex items-center justify-center">
+                    <BsSaveFill color="white" className="mr-2" size={20} />
+                    Keep
+                  </div>
 
-                </div>
+                  :
+                  <div className="h-6 flex items-center justify-center">
+                    <div className="dot-loader" />
+                  </div>
             }
           </button>
         </div>
@@ -242,16 +348,16 @@ useEffect(() => {
                   <div className="dot-loader" />
                 </div>
                 :
-                loadCaseData?
-                `Open for $${caseData?.average_price? caseData?.average_price : 10}`
-                :
-                <div className="h-5 flex items-center justify-center">
-                <div className="loader-dot"/>
-              </div>
+                loadCaseData ?
+                  `Open for $${caseData?.average_price ? caseData?.average_price : 10}`
+                  :
+                  <div className="h-5 flex items-center justify-center">
+                    <div className="loader-dot" />
+                  </div>
             }
           </button>
         </div>
-// 
+        // 
       }
 
     </>

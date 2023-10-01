@@ -35,11 +35,11 @@ export interface SteamItemData {
   
 
 export interface InventoryItem {
-    inventoryId?: string;
     id?: string;
     name?: string;
     rarity?: string;
     image?: string;
+    value?: number;
 }
 
 export interface UserProfileData {

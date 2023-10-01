@@ -192,7 +192,6 @@ router.post("/data/getPrice",
       const response = await axios.get(
           `http://csgobackpack.net/api/GetItemPrice/?currency=USD&id=${item}&time=7&icon=1`
         );
-        console.log(response.data);
       if(response.data){
         res.status(201).json({
           success: true,
@@ -219,7 +218,6 @@ router.get("/data/agents",
       const response = await axios.get(
           `https://bymykel.github.io/CSGO-API/api/en/agents.json`
         );
-        console.log(response.data);
       if(response.data){
         res.status(201).json({
           success: true,

@@ -47,7 +47,6 @@ router.post(
 );
 
 //Use Demo account
-
 router.get( 
   "/demoAccount",
   catchAsyncErrors(async (req, res, next) => {
@@ -85,5 +84,87 @@ router.post(
     }
   })
 );
+
+//removeFromBalance 
+router.post(
+  "/removeFromBalance",
+  catchAsyncErrors(async (req, res, next) => {
+    try {
+      const { steamId, amount  } = req.body;
+
+      const user = await User.findOne({ steamid: steamId });
+      if (!user) {
+        return res.status(404).json({ message: "Usuario no encontrado" });
+      }
+      user.removeFromBalance(amount).then((updatedUser) =>{
+        return res.status(200).json({
+          success: true,
+          user: updatedUser,
+        });
+      })
+
+
+    } catch (error) {
+      return next(new ErrorHandler(error.message, 500));
+    }
+  })
+);
+
+//Add Item to inventory
+router.post(
+  "/addItem",
+  catchAsyncErrors(async (req, res, next) => {
+    try {
+      const { steamId , newItem } = req.body;
+
+      const user = await User.findOne({ steamid: steamId });
+      if (!user) {
+        return res.status(404).json({ message: "Usuario no encontrado" });
+      }
+      user.addToInventory({
+        id: newItem.id,
+        name: newItem.name,
+        rarity: newItem.rarity, 
+        image: newItem.image,
+        value: newItem.value
+      }).then((updatedUser) =>{
+        return res.status(200).json({
+          success: true,
+          user: updatedUser,
+        });
+      })
+
+
+    } catch (error) {
+      return next(new ErrorHandler(error.message, 500));
+    }
+  })
+);
+//sell last added
+router.post(
+  "/sellLastAdded",
+  catchAsyncErrors(async (req, res, next) => {
+    try {
+      const { steamId  } = req.body;
+
+      const user = await User.findOne({ steamid: steamId });
+      if (!user) {
+        return res.status(404).json({ message: "Usuario no encontrado" });
+      }
+      const toDelete = user.Inventory[user.Inventory.length - 1]
+      user.removeFromInventory(toDelete._id).then((updatedUser) =>{
+        return res.status(200).json({
+          success: true,
+          user: updatedUser,
+        });
+      })
+
+
+    } catch (error) {
+      return next(new ErrorHandler(error.message, 500));
+    }
+  })
+);
+
 
 module.exports = router;

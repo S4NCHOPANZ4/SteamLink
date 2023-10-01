@@ -139,7 +139,7 @@ const CasePage = () => {
     if (caseName) {
       setLoaded(false)
       try {
-        const response = await axios.post<{ success: boolean, data: CSgoWeaponCase }>('http://localhost:3001/assets/data/itemData',
+        const response = await axios.post<{ success: boolean, data: CSgoWeaponCase }>(`${import.meta.env.VITE_BACKEND_URL}/assets/data/itemData`,
           {
             item_id: itemName
           });
@@ -159,7 +159,7 @@ const CasePage = () => {
     if (caseName) {
       setLoaded(false)
       try {
-        const response = await axios.get<{ success: boolean, data: Agent[] }>('http://localhost:3001/assets/data/agents');
+        const response = await axios.get<{ success: boolean, data: Agent[] }>(`${import.meta.env.VITE_BACKEND_URL}/assets/data/agents`);
         if (response.data.success) {
           setLoaded(true)
           const fixedSkinType = convertAgentsToWeaponSkins(response.data.data)

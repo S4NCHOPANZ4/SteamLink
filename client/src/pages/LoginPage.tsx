@@ -10,7 +10,7 @@ const LoginPage = () => {
     const navigate = useNavigate()
     
     useEffect(() => {
-        axios.post('http://localhost:3001/user/createUser',
+        axios.post(`${import.meta.env.VITE_BACKEND_URL}/user/createUser`,
         {
             id: id
         }

@@ -21,7 +21,7 @@ function App() {
 
   useEffect(() => {
 
-    axios.get('http://localhost:3001/auth/user', { withCredentials: true })
+    axios.get(`${import.meta.env.VITE_BACKEND_URL}/auth/user`, { withCredentials: true })
       .then(response => {
         FetchUserData(response.data.steamId)
       })
@@ -33,7 +33,7 @@ function App() {
   const FetchUserData = async (steamId: string) => {
     try {
       if (steamId) {
-        const response = await axios.post<{ success: boolean, user: UserProfileData }>('http://localhost:3001/user/authUser', {
+        const response = await axios.post<{ success: boolean, user: UserProfileData }>(`${import.meta.env.VITE_BACKEND_URL}/user/authUser`, {
           steamId: steamId
         });
         if (response.data.success) {
