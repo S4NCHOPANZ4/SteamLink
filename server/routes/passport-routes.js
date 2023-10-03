@@ -26,8 +26,8 @@ router.get(
   (req, res) => {
     console.log(req.user);
     
-    res.cookie("userData", JSON.stringify(req.user), { httpOnly: true });
-    res.redirect(`http://localhost:5173/login/${req.user.steamId}`);
+    res.cookie("userData", JSON.stringify(req.user),{ httpOnly: true, sameSite: 'None', secure: true });
+    res.redirect(`https://casejolt.vercel.app/login/${req.user.steamId}`);
   }
 );
 
@@ -35,8 +35,8 @@ router.get(
   "/demoAccount",
   catchAsyncErrors(async (req, res, next) => {
     try {
-      res.cookie("userData", JSON.stringify({ steamId: '000000000', displayName: "DemoAccount"}), { httpOnly: true });
-      res.redirect(`http://localhost:5173/login/000000000`);
+      res.cookie("userData", JSON.stringify({ steamId: '000000000', displayName: "DemoAccount"}), { httpOnly: true, sameSite: 'None', secure: true });
+      res.redirect(`https://casejolt.vercel.app/login/000000000`);
     } catch (error) {
       return next(new ErrorHandler(error.message, 500));
     }
@@ -48,7 +48,7 @@ router.get(
   catchAsyncErrors(async (req, res, next) => {
     try {
       deleteCookies(res);
-      res.redirect(`http://localhost:5173`);
+      res.redirect(`https://casejolt.vercel.app`);
 
     } catch (error) {
       return next(new ErrorHandler(error.message, 500));

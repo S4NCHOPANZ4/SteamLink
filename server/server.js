@@ -19,7 +19,7 @@ const port = process.env.PORT || 3001;
 
 // Configura la sesión
 app.use(cors({
-  origin: "http://localhost:5173",
+  origin: "https://casejolt.vercel.app",
   credentials: true,
 }));
 app.use(session({ secret: '64882127F2A6712358146C6A1F144FCA', resave: true, saveUninitialized: true }));
