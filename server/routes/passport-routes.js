@@ -13,6 +13,11 @@ function deleteCookies(res) {
 }
 //==================================Auth Routes==================================
 // Route for initiating Steam authentication
+
+router.get(
+  "/", (req, res) => {
+    res.send("Home");
+  })
 router.get(
   "/auth/steam",
   passport.authenticate("steam", { failureRedirect: "/" }),

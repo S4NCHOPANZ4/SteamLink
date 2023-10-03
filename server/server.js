@@ -43,7 +43,9 @@ const User = require('./routes/userController');
 app.use('/assets', csgoGameAssets);
 app.use('/user', User);
 app.use('/', authRoutes);
-
+app.use("/test", (req, res) => {
+  res.send("hello world!");
+})
 
 
 connectDatabase();
