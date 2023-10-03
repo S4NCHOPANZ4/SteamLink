@@ -24,6 +24,8 @@
     "mongoose": "^7.5.2",
     "nodemon": "^3.0.1",
     "passport": "^0.6.0",
-    "passport-steam": "^1.0.18"
+    "passport-steam": "^1.0.18",
+    "redis": "^4.6.10",
+    "util": "^0.12.5"
   }
 }
