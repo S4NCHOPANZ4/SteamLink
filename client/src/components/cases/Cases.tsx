@@ -50,7 +50,7 @@ const Cases = ({ data }: props) => {
     try {
       const response = await axios.post<{ success: boolean, data: SteamItemData }>(`${import.meta.env.VITE_BACKEND_URL}/assets/data/getPrice`, {
         item: data.name.replace(/ /g, "%20")
-      },{withCredentials: true});
+      });
       if (response.data.success) {
         setItemData(response.data.data)
       }
