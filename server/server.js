@@ -22,7 +22,7 @@ app.use(cors({
   origin: "https://casejolt.vercel.app",
   credentials: true,
 }));
-app.use(session({ secret: '64882127F2A6712358146C6A1F144FCA', resave: true, saveUninitialized: true }));
+app.use(session({ secret: process.env.STEAM_API_KEY, resave: true, saveUninitialized: true }));
 
 app.use(passport.initialize());
 app.use(passport.session());
