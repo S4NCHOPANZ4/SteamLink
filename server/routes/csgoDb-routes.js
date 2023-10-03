@@ -218,19 +218,49 @@ router.get("/data/agents",
       const response = await axios.get(
           `https://bymykel.github.io/CSGO-API/api/en/agents.json`
         );
-      if(response.data){
         res.status(201).json({
           success: true,
-          data: response.data,
+          data: 
+          {
+            "success": true,
+            "average_price": "9.15",
+            "median_price": "9.21",
+            "amount_sold": "1957",
+            "standard_deviation": "3.82",
+            "lowest_price": "7.51",
+            "highest_price": "9.54",
+            "first_sale_date": "1405461600",
+            "time": "7",
+            "icon": "http://cdn.steamcommunity.com/economy/image/-9a81dlWLwJ2UUGcVs_nsVtzdOEdtWwKGZZLQHTxDZ7I56KU0Zwwo4NUX4oFJZEHLbXU5A1PIYQNqhpOSV-fRPasw8rsVk5kKhZDpYX3e1Yz7KKcPzwav9jnzdfdlfWmY7_TzmkF6ZMlj77A9o3x0Qe1qhBkZGjxI9LBJgMgIQaH1G7WeaA/",
+            "currency": "USD"
+        },
         });
-      }else{
-        res.status(404).json({
-          success: false,
-          data: {
-            user: 'NotFound err 404 chech api /api/en/agents.json'
-          },
-        });
-      }
+      // if(response.data){
+      //   res.status(201).json({
+      //     success: true,
+      //     data: 
+      //     {
+      //       "success": true,
+      //       "average_price": "9.15",
+      //       "median_price": "9.21",
+      //       "amount_sold": "1957",
+      //       "standard_deviation": "3.82",
+      //       "lowest_price": "7.51",
+      //       "highest_price": "9.54",
+      //       "first_sale_date": "1405461600",
+      //       "time": "7",
+      //       "icon": "http://cdn.steamcommunity.com/economy/image/-9a81dlWLwJ2UUGcVs_nsVtzdOEdtWwKGZZLQHTxDZ7I56KU0Zwwo4NUX4oFJZEHLbXU5A1PIYQNqhpOSV-fRPasw8rsVk5kKhZDpYX3e1Yz7KKcPzwav9jnzdfdlfWmY7_TzmkF6ZMlj77A9o3x0Qe1qhBkZGjxI9LBJgMgIQaH1G7WeaA/",
+      //       "currency": "USD"
+      //   },
+      //   });
+      // }else{
+      //   res.status(404).json({
+      //     success: false,
+      //     data: {
+      //       user: 'NotFound err 404 chech api /api/en/agents.json'
+      //     },
+      //   });
+      // }
       
     } catch (error) {
       return next(new ErrorHandler(error.message, 500));
