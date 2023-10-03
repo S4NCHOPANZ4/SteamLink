@@ -207,7 +207,7 @@ router.post("/data/getPrice",
       }
       
     } catch (error) {
-      return next(new ErrorHandler(error.message + item, 500));
+      return next(new ErrorHandler(error.message + "=====>>>"+item, 500));
 
     }
   })
