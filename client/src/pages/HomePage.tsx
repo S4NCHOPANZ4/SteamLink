@@ -52,7 +52,7 @@ const HomePage = () => {
 
     const FetchCScases = async () => {
         try {
-            const response = await axios.get<{ success: boolean, data: CSgoWeaponCase[] }>(`${import.meta.env.VITE_BACKEND_URL}/assets/data/cases`);
+            const response = await axios.get<{ success: boolean, data: CSgoWeaponCase[] }>(`${import.meta.env.VITE_BACKEND_URL}/assets/data/cases`,{ withCredentials: true });
             if (response.data.success) { setCaseData(response.data.data) }
             else { setCaseData(null) }
         } catch (error) {
@@ -61,7 +61,7 @@ const HomePage = () => {
     };
     const FetchCScapsules = async () => {
         try {
-            const response = await axios.get<{ success: boolean, data: CSGOCapsulesPack[] }>(`${import.meta.env.VITE_BACKEND_URL}/assets/data/patches`);
+            const response = await axios.get<{ success: boolean, data: CSGOCapsulesPack[] }>(`${import.meta.env.VITE_BACKEND_URL}/assets/data/patches`,{ withCredentials: true });
             if (response.data.success) { setPatchesData(response.data.data) }
             else { setPatchesData(null) }
         } catch (error) {
@@ -70,11 +70,11 @@ const HomePage = () => {
     }
     const FetchCSmusic = async () => {
         try {
-            const response = await axios.get<{ success: boolean, data: CSGOMusicKitBox[] }>(`${import.meta.env.VITE_BACKEND_URL}/assets/data/music`);
+            const response = await axios.get<{ success: boolean, data: CSGOMusicKitBox[] }>(`${import.meta.env.VITE_BACKEND_URL}/assets/data/music`,{ withCredentials: true });
             if (response.data.success) { setMusicData(response.data.data) }
             else {
                 console.log(musicsData);
-                
+
                 setMusicData(null) }
         } catch (error) {
             console.error('Error al obtener datos del usuario:', error);
@@ -82,7 +82,7 @@ const HomePage = () => {
     }
     const FetchCSsouvenir = async () => {
         try {
-            const response = await axios.get<{ success: boolean, data: CSgoWeaponCase[] }>(`${import.meta.env.VITE_BACKEND_URL}/assets/data/souvenir`);
+            const response = await axios.get<{ success: boolean, data: CSgoWeaponCase[] }>(`${import.meta.env.VITE_BACKEND_URL}/assets/data/souvenir`,{ withCredentials: true });
             if (response.data.success) { setSouvenirData(response.data.data) }
             else { setSouvenirData(null) }
         } catch (error) {
@@ -91,7 +91,7 @@ const HomePage = () => {
     }
     const FetchCSGraffiti = async () => {
         try {
-            const response = await axios.get<{ success: boolean, data: GraffitiBox[] }>(`${import.meta.env.VITE_BACKEND_URL}/assets/data/graffiti`);
+            const response = await axios.get<{ success: boolean, data: GraffitiBox[] }>(`${import.meta.env.VITE_BACKEND_URL}/assets/data/graffiti`,{ withCredentials: true });
             if (response.data.success) { setGraffitiData(response.data.data) }
             else { setGraffitiData(null) }
         } catch (error) {
