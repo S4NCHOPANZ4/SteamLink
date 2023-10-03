@@ -188,25 +188,40 @@ router.get(
 router.post("/data/getPrice",
   catchAsyncErrors(async (req, res, next) => {
     const { item } = req.body 
-    console.log(item);
     try {
-      const response = await axios.get(
-          `http://csgobackpack.net/api/GetItemPrice/?currency=USD&id=${item}&time=7&icon=1`
-        );
-      if(response.data){
-        res.status(201).json({
-          success: true,
-          data: response.data,
-        });
-      }else{
-        res.status(404).json({
-          success: false,
-          data: {
-            user: 'NotFound err 404 chech api http://csgobackpack.net/api/GetItemPrice'
-          },
-        });
-      }
-      
+      // const response = await axios.get(
+      //     `http://csgobackpack.net/api/GetItemPrice/?currency=USD&id=${item}&time=7&icon=1`
+      //   );
+      // if(response.data.success){
+      //   res.status(201).json({
+      //     success: true,
+      //     data: response.data,
+      //   });
+      // }else{
+      //   res.status(404).json({
+      //     success: false,
+      //     data: {
+      //       user: 'NotFound err 404 chech api http://csgobackpack.net/api/GetItemPrice'
+      //     },
+      //   });
+      // }
+      res.status(201).json({
+            success: true,
+            data: {
+              "success": true,
+              "average_price": "1.83",
+              "median_price": "1.88",
+              "amount_sold": "261",
+              "standard_deviation": "6.94",
+              "lowest_price": "0.85",
+              "highest_price": "1.9",
+              "first_sale_date": "1584918000",
+              "time": "7",
+              "icon": "http://cdn.steamcommunity.com/economy/image/-9a81dlWLwJ2UUGcVs_nsVtzdOEdtWwKGZZLQHTxDZ7I56KU0Zwwo4NUX4oFJZEHLbXU5A1PIYQNqhpOSV-fRPasw8rsQ1xgJgxoprumIDho3_LEaCUMuY_vkILbwfX3ZuPUwzsGsZIiibiSporz21HnrxE6aziiJoKUelA_N0aQpAZKASuIOw/",
+              "currency": "USD"
+            }
+          });
+
     } catch (error) {
       return next(new ErrorHandler(error.message , 500));
 
