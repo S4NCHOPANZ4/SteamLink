@@ -214,10 +214,19 @@ router.post('/data/getPrice', async (req, res) => {
     }
   } catch (error) {
     console.error('Error al obtener datos del usuario:', error);
-    res.status(500).json({
-      success: false,
-      error: 'Internal Server Error',
-    });
+    if (error.response && error.response.status === 500) {
+      res.status(500).json({
+        success: false,
+        error: 'Internal Server Error',
+        errorMessage: 'Error en la API externa. Por favor, inténtalo de nuevo más tarde.',
+      });
+    } else {
+      res.status(500).json({
+        success: false,
+        error: 'Internal Server Error',
+        errorMessage: error.message,
+      });
+    }
   }
 });
 
