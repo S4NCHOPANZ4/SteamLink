@@ -190,6 +190,11 @@ router.post("/data/getPrice",
   catchAsyncErrors(async (req, res, next) => {
     const { item } = req.body 
     try {
+
+      res.setHeader('Access-Control-Allow-Origin', 'https://casejolt.vercel.app');
+      res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
+      res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+
       const response = await axios.get(
           `https://csgobackpack.net/api/GetItemPrice/?currency=USD&id=${item}&time=7&icon=1`
         );

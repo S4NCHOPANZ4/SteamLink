@@ -2,22 +2,9 @@
     "version": 2,
     "name": "server",
     "builds": [
-      { "src": "./server.js", "use": "@vercel/node" }
+        {"src" : "./server.js", "use": "@vercel/node"}
     ],
-    "routes": [
-      {
-        "src": "/assets/data/getPrice",
-        "methods": ["POST"],
-        "headers": {
-          "Content-Type": "application/json",
-          "Access-Control-Allow-Origin": "https://casejolt.vercel.app",
-          "Access-Control-Allow-Credentials": "true"
-        },
-        "dest": "/server.js"
-      },
-      {
-        "src": "/(.*)",
-        "dest": "/server.js"
-      }
+    "routes":[
+        {"src" : "/(.*)", "dest": "/server.js"}
     ]
-  }
+}
