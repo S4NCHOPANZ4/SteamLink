@@ -188,6 +188,7 @@ router.get(
 router.post("/data/getPrice",
   catchAsyncErrors(async (req, res, next) => {
     const { item } = req.body 
+    console.log(item);
     try {
       const response = await axios.get(
           `http://csgobackpack.net/api/GetItemPrice/?currency=USD&id=${item}&time=7&icon=1`
