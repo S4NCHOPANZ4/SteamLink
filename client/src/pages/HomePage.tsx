@@ -74,6 +74,7 @@ const HomePage = () => {
             if (response.data.success) { setMusicData(response.data.data) }
             else {
                 console.log(musicsData);
+                
                 setMusicData(null) }
         } catch (error) {
             console.error('Error al obtener datos del usuario:', error);
