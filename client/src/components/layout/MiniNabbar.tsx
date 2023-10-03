@@ -36,24 +36,20 @@ const MiniNabbar = () => {
                     CASES
                 </p>
             </div>
-            <div onClick={() => handleClick(900)} className='w-[20%] text-center cursor-pointer hover:bg-[var(--graybase-600)] px-4 py-3 hover:border-purple-600'>
+            <div onClick={() => handleClick(1000)} className='w-[20%] text-center cursor-pointer hover:bg-[var(--graybase-600)] px-4 py-3 hover:border-purple-600'>
                 <p className='flex items-center justify-center h-full w-full'>
                     PATCHES
                 </p>
             </div>
-            <div onClick={() => handleClick(1300)} className='w-[20%] text-center cursor-pointer hover:bg-[var(--graybase-600)] px-4 py-3  hover:border-purple-600'>
-                <p className='flex items-center justify-center h-full w-full'>
-                    MUSIC KITS
-                </p>
-            </div>
-            <div onClick={() => handleClick(1700)} className='w-[20%] text-center cursor-pointer hover:bg-[var(--graybase-600)] px-4 py-3  hover:border-purple-600'>
-                <p className='flex items-center justify-center h-full w-full'>
-                    SOUVENIR CASES
-                </p>
-            </div>
-            <div onClick={() => handleClick(2300)} className='w-[20%] text-center cursor-pointer hover:bg-[var(--graybase-600)] px-4 py-3  rounded-r-full  hover:border-purple-600'>
+
+            <div onClick={() => handleClick(1600)} className='w-[20%] text-center cursor-pointer hover:bg-[var(--graybase-600)] px-4 py-3  rounded-r-full  hover:border-purple-600'>
                 <p className='flex items-center justify-center h-full w-full'>
                     GRAFFITIS
+                </p>
+            </div>
+            <div onClick={() => handleClick(1800)} className='w-[20%] text-center cursor-pointer hover:bg-[var(--graybase-600)] px-4 py-3  hover:border-purple-600'>
+                <p className='flex items-center justify-center h-full w-full'>
+                    SOUVENIR CASES
                 </p>
             </div>
         </div>

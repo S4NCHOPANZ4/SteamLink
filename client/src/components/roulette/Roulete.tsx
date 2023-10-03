@@ -117,7 +117,7 @@ const Roulete = ({ data, type, caseName }: props) => {
   const springProps = useSpring({
     left: clase ? center + offset : 0, // Centra horizontalmente utilizando "center"
     from: { left: 0 },
-    config: { duration: 9500, easing: (t) => 1 - Math.pow(1 - t, 7) },
+    config: { duration: 8000, easing: (t) => 1 - Math.pow(1 - t, 7) },
     //  config: { duration: 1000 },
     onStart: () => {
       setRolling(true)

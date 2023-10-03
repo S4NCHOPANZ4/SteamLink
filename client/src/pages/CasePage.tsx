@@ -41,7 +41,15 @@ const CasePage = () => {
   }, [caseData])
 
   useEffect(() => {
+    const scrollToTop = () => {
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
+    };
 
+    // Llamada a la función al entrar en el componente
+    scrollToTop();
   }, [])
 
   const reCreateList = () => {

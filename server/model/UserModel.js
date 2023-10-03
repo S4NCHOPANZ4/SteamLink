@@ -41,9 +41,8 @@ orderSchema.methods.addToInventory = function(newItem) {
 // Método para eliminar un objeto específico del array Inventory
 orderSchema.methods.removeFromInventory = function(itemId) {
   const item = this.Inventory.find(item => item._id.toString() === itemId.toString());
-
   if (item) {
-    this.balance += item.value;
+    this.balance = parseFloat((this.balance - item.value).toFixed(2));
     const itemIndex = this.Inventory.findIndex(item => item._id.toString() === itemId.toString());
     if (itemIndex !== -1) {
       this.Inventory.splice(itemIndex, 1);
@@ -54,5 +53,7 @@ orderSchema.methods.removeFromInventory = function(itemId) {
     return this;
   }
 };
+
+
 
 module.exports = mongoose.model("User", orderSchema);

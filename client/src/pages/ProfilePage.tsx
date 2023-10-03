@@ -1,21 +1,25 @@
-import { useEffect, useState } from 'react'
 import Navbar from '../components/layout/Navbar'
-import Inventory from '../components/Inventory'
+import Inventory from '../components/inventory/Inventory'
 import { useAppSelector } from '../redux/store';
-import { CSgoWeaponCase } from '../models/csgoAssets-model';
 import bgAk47 from '../assets/akbg.png'
+import { useState } from 'react';
+import Refil from '../components/layout/Refil';
 
 const ProfilePage = () => {
   const userData = useAppSelector((state) => state.user);
+  const [openDeposit, setOpenDeposit] = useState<boolean>(false)
 
-  const [caseData, setCaseData] = useState<CSgoWeaponCase[] | null>()
 
 
   return (
     <>
+          <div>
+        <Refil open={openDeposit} setOpen={setOpenDeposit}/>
+      </div>
       <div>
         <Navbar />
       </div>
+
       <div
       className='relative mb-5'
       >
@@ -30,7 +34,9 @@ const ProfilePage = () => {
               <h1 className='text-zinc-200 font-medium text-2xl mb-10'>{userData.username}</h1>
               <div className='flex items-center justify-center'>
                 <h1 className='text-emerald-400 font-bold text-2xl'>${userData.balance}</h1>
-                <button className='bg-emerald-400 hover:bg-emerald-500 font-bold text-white w-[100px] text-sm py-2 px-3 border-poligon ml-5'>REFIL</button>
+                <button 
+                onClick={() => setOpenDeposit(true)}
+                className='bg-emerald-400 hover:bg-emerald-500 font-bold text-white w-[100px] text-sm py-2 px-3 border-poligon ml-5'>REFIL</button>
               </div>
             </div>
           </div>

@@ -165,6 +165,30 @@ router.post(
     }
   })
 );
+//sell item
+router.post(
+  "/sellItem",
+  catchAsyncErrors(async (req, res, next) => {
+    try {
+      const { steamId, itemId  } = req.body;
+
+      const user = await User.findOne({ steamid: steamId });
+      if (!user) {
+        return res.status(404).json({ message: "Usuario no encontrado" });
+      }
+      user.removeFromInventory(itemId).then((updatedUser) =>{
+        return res.status(200).json({
+          success: true,
+          user: updatedUser,
+        });
+      })
+
+
+    } catch (error) {
+      return next(new ErrorHandler(error.message, 500));
+    }
+  })
+);
 
 
 module.exports = router;

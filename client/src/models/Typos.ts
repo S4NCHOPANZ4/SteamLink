@@ -40,6 +40,7 @@ export interface InventoryItem {
     rarity?: string;
     image?: string;
     value?: number;
+    _id?: string;
 }
 
 export interface UserProfileData {

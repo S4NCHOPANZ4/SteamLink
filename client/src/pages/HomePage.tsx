@@ -9,6 +9,7 @@ import DisplayCases from '../components/DisplayCases';
 import MiniNabbar from '../components/layout/MiniNabbar';
 import Particles from '../components/bg-style-components/Particles';
 import Cubes from '../components/bg-style-components/Cubes';
+import Footer from '../components/layout/Footer';
 
 interface UserData {
     steamId: string;
@@ -158,7 +159,9 @@ const HomePage = () => {
                     <DisplayCases dataCases={souvenirData} />
                 }
             </div>
-
+            <div>
+                <Footer/>
+            </div>
 
         </>
     )

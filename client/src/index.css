@@ -6,9 +6,10 @@
   --graybase-200: #57575f;
   --graybase-300: #44444b;
   --graybase-400: #36363c;
-  --graybase-500: #2d2d33;
+  --graybase-500: #292937;
   --graybase-600: #272533;
-  --graybase-700: #1C1A24
+  --graybase-700: #1C1A24;
+  --graybase-800: #14121a;
 }
 
 * {
@@ -76,7 +77,7 @@ html{
 }
 
 .background-lineargradient-gray {
-  background: linear-gradient(234deg, rgba(61, 61, 61, 0.76) 0%, rgba(78, 78, 78, 0.612) 80%);
+  background: linear-gradient(180deg, rgba(61, 61, 61, 0) 10%, rgba(78, 78, 78, 0.177) 100%);
 }
 
 /* Weapon linear gradient  */

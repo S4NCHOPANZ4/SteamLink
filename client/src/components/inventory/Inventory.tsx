@@ -1,23 +1,31 @@
 import { useNavigate } from "react-router-dom";
-import { useAppSelector } from "../redux/store";
+import { useAppSelector } from "../../redux/store";
+import InventoyItem from "./InventoyItem";
+import { useEffect, useState } from "react";
+import { InventoryItem } from "../../models/Typos";
 
 const Inventory = () => {
 
   const navigate = useNavigate()
   const userData = useAppSelector((state) => state.user);
+  const [itemList, setItemList] = useState<InventoryItem[] | null>()
+
+  useEffect(() =>{
+   if(userData.Inventory)setItemList([...userData.Inventory].reverse())
+  },[userData])
 
   return (
     <>
 
-      <div className='bg-[var(--graybase-600)]  max-w-[1300px]  m-auto rounded-lg  flex-col'>
+      <div className=' max-w-[1300px]  m-auto rounded-lg  flex-col p-4'>
         <div className=" w-full">
           {
             userData.Inventory != undefined && (userData.Inventory?.length > 0) ?
               <div className="grid gap-2 grid-cols-1 sm:grid-cols-3 md:grid-cols-5 h-full w-full min-h-[20rem] ">
                 {
-                  userData.Inventory?.map((item, i: number) => {
+                  itemList?.map((item, i: number) => {
                     return (
-                      <div className="bg-white">items</div>
+                      <InventoyItem item={item} i={i}/>
                     )
                   })
                 }
