@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit"
-import { SteamUserData, UserProfileData } from "../../../models/Typos";
+import {  UserProfileData } from "../../../models/Typos";
 
 
 
@@ -10,9 +10,11 @@ export const userSlice = createSlice({
     initialState,
     reducers: {
         setUser: (state, action: PayloadAction<UserProfileData>) => {
+            console.log(state);
             return { ...action.payload };
         },
         clearUser: (state) => {
+            console.log(state);
             return {};
         },
 

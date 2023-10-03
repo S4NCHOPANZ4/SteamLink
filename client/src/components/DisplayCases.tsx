@@ -1,6 +1,5 @@
-import { useRef } from 'react';
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Pagination, Navigation } from 'swiper/modules';
+import { Pagination } from 'swiper/modules';
 import { CSGOCapsulesPack, CSGOMusicKitBox, CSgoWeaponCase, GraffitiBox } from '../models/csgoAssets-model';
 
 
