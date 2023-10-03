@@ -7,8 +7,8 @@ require("dotenv").config({
 passport.use(
   new SteamStrategy(
     {
-      returnURL: "http://localhost:3001/auth/steam/return",
-      realm: "http://localhost:3001/",
+      returnURL: "https://casejoltserver.vercel.app/auth/steam/return",
+      realm: "https://casejoltserver.vercel.app/",
       apiKey: process.env.STEAM_API_KEY,
     },
     (identifier, profile, done) => {
