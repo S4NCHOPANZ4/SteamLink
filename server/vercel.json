@@ -6,7 +6,7 @@
     ],
     "routes": [
       {
-        "src": "/data/getPrice",
+        "src": "/assets/data/getPrice",
         "methods": ["POST"],
         "headers": {
           "Content-Type": "application/json",
