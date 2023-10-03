@@ -18,10 +18,7 @@ const app = express();
 const port = process.env.PORT || 3001;
 
 // Configura la sesión
-app.use(cors({
-  origin: "https://casejolt.vercel.app",
-  credentials: true,
-}));
+
 app.use(session({ secret: process.env.STEAM_API_KEY, resave: true, saveUninitialized: true }));
 
 app.use(passport.initialize());
@@ -29,7 +26,10 @@ app.use(passport.session());
 app.use(cookieParser());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json()); 
-
+app.use(cors({
+  origin: "https://casejolt.vercel.app",
+  credentials: true,
+}));
 
 passport.serializeUser((user, done) => {
     done(null, user)
