@@ -7,9 +7,13 @@
     "routes": [
       {
         "src": "/data/getPrice",
-        "methods": ["POST", "GET"],
-        "headers": "Content-Type",
-        "allow": ["https://csgobackpack.net"]
+        "methods": ["POST"],
+        "headers": {
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Origin": "https://casejolt.vercel.app",
+          "Access-Control-Allow-Credentials": "true"
+        },
+        "dest": "/server.js"
       },
       {
         "src": "/(.*)",
