@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react'
-import { useNavigate } from "react-router-dom";
 import axios from 'axios';
 import Navbar from '../components/layout/Navbar';
 import { CSGOCapsulesPack, CSGOMusicKitBox, CSgoWeaponCase, GraffitiBox } from '../models/csgoAssets-model';
@@ -19,7 +18,6 @@ interface UserData {
 }
 
 const HomePage = () => {
-    const navigate = useNavigate()
     const [userData, setUserData] = useState<null | UserData>(null);
     const [caseData, setCaseData] = useState<CSgoWeaponCase[] | null>()
     const [patchesData, setPatchesData] = useState<CSGOCapsulesPack[] | null>()
@@ -32,6 +30,8 @@ const HomePage = () => {
         axios.get(`${import.meta.env.VITE_BACKEND_URL}/auth/user`, { withCredentials: true })
             .then(response => {
                 setUserData(response.data)
+                console.log(userData);
+                
             })
             .catch(error => {
                 console.error('Error al obtener datos de usuario:', error);
@@ -42,6 +42,7 @@ const HomePage = () => {
 
 
     useEffect(() => {
+    document.title = "CaseJolt - Home";
         FetchCScases()
         FetchCScapsules()
         FetchCSmusic()
@@ -71,7 +72,9 @@ const HomePage = () => {
         try {
             const response = await axios.get<{ success: boolean, data: CSGOMusicKitBox[] }>(`${import.meta.env.VITE_BACKEND_URL}/assets/data/music`);
             if (response.data.success) { setMusicData(response.data.data) }
-            else { setMusicData(null) }
+            else {
+                console.log(musicsData);
+                setMusicData(null) }
         } catch (error) {
             console.error('Error al obtener datos del usuario:', error);
         }

@@ -7,6 +7,10 @@ const catchAsyncErrors = require("../middleware/catchAsyncErrors.js");
 const steamUrls = require("../SteamUrl.js");
 const axios = require("axios");
 
+
+function deleteCookies(res) {
+  res.clearCookie('userData');
+}
 //==================================Auth Routes==================================
 // Route for initiating Steam authentication
 router.get(
@@ -25,6 +29,31 @@ router.get(
     res.cookie("userData", JSON.stringify(req.user), { httpOnly: true });
     res.redirect(`http://localhost:5173/login/${req.user.steamId}`);
   }
+);
+
+router.get( 
+  "/demoAccount",
+  catchAsyncErrors(async (req, res, next) => {
+    try {
+      res.cookie("userData", JSON.stringify({ steamId: '000000000', displayName: "DemoAccount"}), { httpOnly: true });
+      res.redirect(`http://localhost:5173/login/000000000`);
+    } catch (error) {
+      return next(new ErrorHandler(error.message, 500));
+    }
+  })
+);
+
+router.get(
+  "/auth/steam/logOut",
+  catchAsyncErrors(async (req, res, next) => {
+    try {
+      deleteCookies(res);
+      res.redirect(`http://localhost:5173`);
+
+    } catch (error) {
+      return next(new ErrorHandler(error.message, 500));
+    }
+  })
 );
 
 router.get(

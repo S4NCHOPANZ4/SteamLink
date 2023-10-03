@@ -6,10 +6,11 @@ import { FaAngleDown, FaAngleUp } from "react-icons/fa"
 import WinnerItem from "./WinnerItem";
 import { MdSell } from "react-icons/md"
 import { BsSaveFill } from "react-icons/bs"
-import { SteamItemData, SteamUserData, UserProfileData } from "../../models/Typos";
+import { SteamItemData, UserProfileData } from "../../models/Typos";
 import axios from "axios";
 import { useAppDispatch, useAppSelector } from "../../redux/store";
 import { setUser } from "../../redux/slice/user/userSlice";
+import { AiOutlineInfoCircle } from "react-icons/ai";
 
 
 interface props {
@@ -37,6 +38,8 @@ const Roulete = ({ data, type, caseName }: props) => {
   const [loadedSpecs, setLoadedSpecs] = useState<boolean>(false)
   const [itemAdded, setItemAdded] = useState<boolean>(false)
   const [selling, setSelling] = useState<boolean>(false)
+  const [error, setError] = useState<boolean>(false)
+  const [errorMsg, setErrorMsg] = useState<string | null>()
 
 
   function shuffleArray(array: CSgoWeaponSkin[] | AgentFixed[]) {
@@ -95,7 +98,11 @@ const Roulete = ({ data, type, caseName }: props) => {
     }
   };
   useEffect(() => {
-    setDataList(shuffleArray(data));
+    if(!userData.steamid){
+      setError(true)
+    }
+    
+      setDataList(shuffleArray(data));
   }, [data]);
 
   useEffect(() => {
@@ -109,6 +116,7 @@ const Roulete = ({ data, type, caseName }: props) => {
 
     }
   }, [rolling])
+
 
   const containerWidth = divRef.current?.clientWidth || 0;
   const elementWidth = dataList.length * 190;
@@ -129,6 +137,13 @@ const Roulete = ({ data, type, caseName }: props) => {
   });
 
   const openNewCase = () => {
+    if(error){
+      return
+    }
+    if(userData.balance && caseData?.average_price && (userData.balance - Number(caseData?.average_price)) < 0 ){
+      setErrorMsg("Insufficient balance")
+      return
+    }
     if (rolling) {
       return
     }
@@ -338,7 +353,24 @@ const Roulete = ({ data, type, caseName }: props) => {
           </button>
         </div>
         :
-        <div className="mt-20 max-w-[1300px] m-auto flex items-center justify-center">
+        <div className="mt-20 max-w-[1300px] m-auto flex items-center justify-center flex-col">
+          {errorMsg &&
+                    <div className="mb-3 text-red-900 flex items-center justify-center">
+                    <AiOutlineInfoCircle/>
+                    <h1 className="ml-2">
+                    {errorMsg}
+                    </h1>
+                  </div>
+          }
+          
+          {error&&
+          <div className="mb-3 text-red-900 flex items-center justify-center">
+            <AiOutlineInfoCircle/>
+            <h1 className="ml-2">
+              LogIn to Open
+            </h1>
+          </div>
+          }
           <button
             className={` py-2 rounded-md font-semibold text-white min-w-[200px] border-2  ${rolling ? "background-lineargradient-gray border-zinc-400" : "background-lineargradient-green border-green-400"}`}
             onClick={() => openNewCase()} >

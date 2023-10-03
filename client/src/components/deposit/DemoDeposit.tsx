@@ -1,11 +1,46 @@
 import {useState} from "react"
-import { useAppSelector } from "../../redux/store";
+import { useAppDispatch, useAppSelector } from "../../redux/store";
 import { IoAddSharp, IoRemoveSharp } from "react-icons/io5"
+import { setUser } from "../../redux/slice/user/userSlice"
+import axios from "axios";
+import { UserProfileData } from "../../models/Typos";
 
 
-const DemoDeposit = () => {
+interface props {
+    setOpen: (value: boolean) => void;
+}
+const DemoDeposit = ({setOpen}:props) => {
+
+    const dispatch = useAppDispatch();
     const userData = useAppSelector((state) => state.user);
     const [addValue, setAddValue] = useState<number>(0)
+    const [loading, setLoading] = useState<boolean>(false)
+
+    const addAmount = async () => {
+        setLoading(true)
+        try {
+            const response = await axios.post<{ success: boolean, user: UserProfileData }>(`${import.meta.env.VITE_BACKEND_URL}/user/addBalance`, {
+                steamId: userData.steamid,
+                amount: addValue
+            });
+            if (response.data.success) {
+                dispatch(setUser(response.data.user));
+                setLoading(false)
+                setOpen(false)
+                return
+            }
+            else {
+                setLoading(false)
+                setOpen(false)
+                return
+            }
+        } catch (error) {
+            setLoading(false)
+            setOpen(false)
+            console.error('Error al obtener datos del usuario:', error);
+            return
+        }
+    }
 
     return (
         <div className=" w-full flex items-center justify-center flex-col ">
@@ -40,8 +75,22 @@ const DemoDeposit = () => {
                         <IoAddSharp size={25}/>
                     </button>
                 </div>
-                <button className="mt-6 bg-violet-600 hover:bg-violet-700 text-white font-bold px-10 py-3 border-poligon">
-                    UPDATE
+                <button 
+                onClick={()=> {
+                    if(loading){
+                        return
+                    }else{
+                        addAmount()
+                    }
+                }}
+                className="mt-6 bg-violet-600 hover:bg-violet-700 text-white font-bold px-10 py-3 border-poligon">
+                    {
+                        loading?
+                        <div className="spiner_special_small"></div>
+                        :
+                        "UPDATE"
+
+                    }
                 </button>
 
             </div>

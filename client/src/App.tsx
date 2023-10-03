@@ -1,19 +1,13 @@
 import { useEffect } from 'react'
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { CasePage, HomePage, LoginPage, ProfilePage } from './Routes';
-import { useAppDispatch, useAppSelector } from "./redux/store";
-import { setUser, clearUser } from './redux/slice/user/userSlice';
+import { useAppDispatch } from "./redux/store";
+import { setUser } from './redux/slice/user/userSlice';
 
 
 import axios from 'axios';
-import { SteamUserData, UserProfileData } from './models/Typos';
+import {  UserProfileData } from './models/Typos';
 
-interface UserData {
-  steamId: string;
-  username: string;
-  displayName: string;
-  // Otros campos de usuario si los tienes
-}
 
 function App() {
 

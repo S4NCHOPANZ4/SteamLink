@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import { useParams } from "react-router-dom";
 
 
@@ -10,12 +10,15 @@ const LoginPage = () => {
     const navigate = useNavigate()
     
     useEffect(() => {
+    document.title = "CaseJolt - Auth";
+
         axios.post(`${import.meta.env.VITE_BACKEND_URL}/user/createUser`,
         {
             id: id
         }
         , { withCredentials: true })
-          .then(response => {
+          .then((response) => {
+            console.log(response);
             navigate('/')
           })
           .catch(error => {

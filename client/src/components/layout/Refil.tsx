@@ -95,7 +95,7 @@ const Refil = ({ open, setOpen }: props) => {
                     </div>
                     <div className="w-full h-[90%]  rounded-lg  overflow-auto p-3 py-5 ">
                         {(selected == 1) &&
-                            <DemoDeposit />
+                            <DemoDeposit setOpen={setOpen}/>
                         }
                         {(selected == 2) &&
                             ((userData.steamid && userData.steamid === '000000000') ?

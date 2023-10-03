@@ -23,7 +23,7 @@ const Footer = () => {
         <div className="w-full bg-[var(--graybase-800)]  flex item-center justify-between mt-10 py-8 px-6 items-center transition-all duration-200
         will-change-transform flex-col sm:flex-row">
             <div>
-                <img src={icon} alt="Icon"  className="h-[80px]"/>
+                <img src={icon} alt="Icon"  className="h-[60px] mb-2"/>
                 <h1 className="text-zinc-400 font-bold text-sm">Follow Me!</h1>
                 <div className="flex mt-4">
                     <BsLinkedin onClick={() => goTo('https://www.linkedin.com/in/juan-d-buitrago/')} size={20} className="text-zinc-400 cursor-pointer hover:text-emerald-400"/>

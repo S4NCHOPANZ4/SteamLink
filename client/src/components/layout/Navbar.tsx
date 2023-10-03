@@ -10,7 +10,6 @@ import Refil from './Refil'
 
 
 const Navbar = () => {
-    // const dispatch = useAppDispatch();
     const navigate = useNavigate();
     const [redirecting, setRedirecting] = useState(false);
     const userData = useAppSelector((state) => state.user);
@@ -19,15 +18,16 @@ const Navbar = () => {
     const [openDeposit, setOpenDeposit] = useState<boolean>(false)
 
     const handleSteamLogin = () => {
-        // Redirigir al usuario a tu backend para iniciar sesión con Steam
         setRedirecting(true);
-        window.location.href = `${import.meta.env.VITE_BACKEND_URL}/auth/steam`; // Reemplaza con la URL de tu backend
+        window.location.href = `${import.meta.env.VITE_BACKEND_URL}/auth/steam`; 
     };
     const handleDemoAccLogin = () => {
-        // Redirigir al usuario a tu backend para iniciar sesión con Steam
         setRedirecting(true);
-
-        window.location.href = `${import.meta.env.VITE_BACKEND_URL}/user/demoAccount`; // Reemplaza con la URL de tu backend
+        window.location.href = `${import.meta.env.VITE_BACKEND_URL}/user/demoAccount`;
+    };
+    const handleLogOut = () => {
+        setRedirecting(true);
+        window.location.href = `${import.meta.env.VITE_BACKEND_URL}/auth/steam/logOut`;
     };
 
 
@@ -38,7 +38,7 @@ const Navbar = () => {
             <div
                 onClick={() => navigate('/')}
                 className="flex justify-center items-center md:ml-7 ml-1 cursor-pointer">
-                <img src={Icon} alt="" className='md:h-[60px] h-[40px]' />
+                <img src={Icon} alt="" className='md:h-[45px] h-[30px]' />
             </div>
             {
                 (userData.username) ?
@@ -96,7 +96,9 @@ const Navbar = () => {
                                         <p className='ml-2 text-sm md:text-md'>DEPOSIT</p>
                                     </button>
                                 </div>
-                                <div className='cursor-pointer flex items-center justify-center  px-2 py-3 rounded-b-lg text-white'>
+                                <div 
+                                onClick={() => handleLogOut()}
+                                className='cursor-pointer flex items-center justify-center  px-2 py-3 rounded-b-lg text-white'>
                                     <CgLogOff />
                                     <p className='ml-2'>Log Out</p>
                                 </div>
@@ -109,7 +111,7 @@ const Navbar = () => {
                     <div className="flex justify-center items-center mr-5">
                         <button
                             onClick={handleSteamLogin}
-                            className="background-lineargradient-green text-white flex items-center justify-center font-semibold py-2 px-3 rounded-lg border-2 border-green-400">
+                            className="bg-emerald-400 hover:bg-emerald-500 font-bold text-white w-[120px] text-sm py-3 px-3 border-poligon ml-5">
                             {redirecting ?
                                 <div className='loader_mini'></div>
                                 :
@@ -118,7 +120,7 @@ const Navbar = () => {
                         </button>
                         <button
                             onClick={handleDemoAccLogin}
-                            className="ml-2 background-lineargradient-gray text-white flex items-center justify-center font-semibold py-2 px-3 rounded-lg border-2 border-zinc-500">
+                            className="bg-emerald-400 hover:bg-emerald-500 font-bold text-white text-sm py-3 px-8 border-poligon ml-5">
                             {redirecting ?
                                 <div className='loader_mini'></div>
                                 :

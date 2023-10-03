@@ -1,5 +1,4 @@
 import home_bg from '../../assets/bg-homepngSmall.png'
-import caseSkinCage from '../../assets/caseSkinAgent.png'
 import { useNavigate } from 'react-router-dom'
 
 import '../../text-styles.css'

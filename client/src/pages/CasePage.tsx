@@ -41,6 +41,7 @@ const CasePage = () => {
   }, [caseData])
 
   useEffect(() => {
+    document.title = "CaseJolt - Case";
     const scrollToTop = () => {
       window.scrollTo({
         top: 0,
@@ -154,7 +155,6 @@ const CasePage = () => {
         if (response.data.success) {
           setLoaded(true)
           setCaseData(response.data.data)
-          console.log(response.data.data);
         }
         else { setCaseData(null) }
       } catch (error) {
@@ -178,7 +178,6 @@ const CasePage = () => {
             type: "Agent",
             name: 'AgentCase'
           })
-          console.log(response.data.data);
         }
         else { setCaseData(null) }
       } catch (error) {

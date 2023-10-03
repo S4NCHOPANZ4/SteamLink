@@ -2,13 +2,21 @@ import Navbar from '../components/layout/Navbar'
 import Inventory from '../components/inventory/Inventory'
 import { useAppSelector } from '../redux/store';
 import bgAk47 from '../assets/akbg.png'
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Refil from '../components/layout/Refil';
+import { useNavigate } from 'react-router-dom';
 
 const ProfilePage = () => {
   const userData = useAppSelector((state) => state.user);
   const [openDeposit, setOpenDeposit] = useState<boolean>(false)
+  const navigate = useNavigate()
 
+  useEffect(() =>{
+    document.title = "CaseJolt - Profile";
+    if(!userData.steamid) {
+      navigate('/')
+    }
+  },[])
 
 
   return (

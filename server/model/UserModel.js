@@ -33,6 +33,11 @@ orderSchema.methods.removeFromBalance = function(amount) {
   }
 };
 
+orderSchema.methods.addToBalance = function(amount) {
+    this.balance = parseFloat((this.balance + amount).toFixed(2));
+    return this.save();
+};
+
 orderSchema.methods.addToInventory = function(newItem) {
   this.Inventory.push(newItem);
   return this.save();
@@ -42,7 +47,7 @@ orderSchema.methods.addToInventory = function(newItem) {
 orderSchema.methods.removeFromInventory = function(itemId) {
   const item = this.Inventory.find(item => item._id.toString() === itemId.toString());
   if (item) {
-    this.balance = parseFloat((this.balance - item.value).toFixed(2));
+    this.balance = parseFloat((this.balance + item.value).toFixed(2));
     const itemIndex = this.Inventory.findIndex(item => item._id.toString() === itemId.toString());
     if (itemIndex !== -1) {
       this.Inventory.splice(itemIndex, 1);

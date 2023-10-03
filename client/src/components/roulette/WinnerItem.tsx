@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react'
 import { Agent, CSgoWeaponSkin } from '../../models/csgoAssets-model'
-import { SteamItemData } from '../../models/Typos'
 
 
 interface props {
