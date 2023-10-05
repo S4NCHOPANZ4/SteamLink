@@ -8,11 +8,13 @@
       {
         "src": "/(.*)",
         "dest": "/server.js",
+        "methods": ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
         "headers": {
-          "Access-Control-Allow-Origin": "*",
+          "Access-Control-Allow-Origin": ["https://casejolt.vercel.app", "https://csgobackpack.net"],
           "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
           "Access-Control-Allow-Headers": "Origin, X-Requested-With, Content-Type, Accept, Authorization"
         }
       }
     ]
   }
+  
