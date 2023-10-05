@@ -55,7 +55,7 @@ const Roulete = ({ data, type, caseName }: props) => {
   const FetchMarketData = async (itemName: string) => {
     setLoadedSpecs(false)
     try {
-      const response = await axios.post<{ success: boolean, data: SteamItemData }>('http://localhost:3001/assets/data/getPrice', {
+      const response = await axios.post<{ success: boolean, data: SteamItemData }>(`${import.meta.env.VITE_BACKEND_URL}/assets/data/getPrice`, {
         item: itemName
       });
       if (response.data.success) {
