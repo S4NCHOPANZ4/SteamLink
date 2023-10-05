@@ -187,46 +187,46 @@ router.get(
 
 
 const cache = {};
-router.post("/data/getPrice",
-  catchAsyncErrors(async (req, res, next) => {
-    const { item } = req.body;
-    try {
-        // Verificar si la respuesta está en caché
-        if (cache[item]) {
-            res.status(201).json({
-                success: true,
-                data: cache[item],
-            });
-        } else {
-            // Realizar la solicitud a la API externa
-            const response = await axios.get(
-                `https://csgobackpack.net/api/GetItemPrice/?currency=USD&id=${item}&time=7&icon=1`
-            ).then(()=>{
-              console.log('a');
-            }).catch(()=>{
-                return next(new ErrorHandler(error.message, 502));
-            })
-            if (response.data.success) {
-                // Almacenar en caché la respuesta
-                cache[item] = response.data;
-                res.status(201).json({
-                    success: true,
-                    data: response.data,
-                });
-            } else {
-                res.status(404).json({
-                    success: false,
-                    data: {
-                        user: 'NotFound err 404 chech api http://csgobackpack.net/api/GetItemPrice'
-                    },
-                });
-            }
-        }
-    } catch (error) {
-        return next(new ErrorHandler(error.message, 500));
+router.post("/data/getPrice", async (req, res, next) => {
+  const { item } = req.body;
+
+  try {
+    // Realiza la solicitud a la API externa desde el servidor usando fetch
+    const response = await fetch(
+      `https://csgobackpack.net/api/GetItemPrice/?currency=USD&id=${item}&time=7&icon=1`
+    );
+
+    // Verifica si la solicitud fue exitosa (código de estado 200)
+    if (response.ok) {
+      // Parsea la respuesta como JSON
+      const data = await response.json();
+
+      if (data.success) {
+        res.status(201).json({
+          success: true,
+          data: data,
+        });
+      } else {
+        res.status(404).json({
+          success: false,
+          data: {
+            user: 'NotFound err 404 check api http://csgobackpack.net/api/GetItemPrice'
+          },
+        });
+      }
+    } else {
+      // Si la solicitud no fue exitosa, maneja el error
+      res.status(response.status).json({
+        success: false,
+        data: {
+          error: `Error from external API: ${response.statusText}`
+        },
+      });
     }
-  })
-);
+  } catch (error) {
+    return next(new ErrorHandler(error.message, 500));
+  }
+});
 router.get("/data/agents",
   catchAsyncErrors(async (req, res, next) => {
     try {
