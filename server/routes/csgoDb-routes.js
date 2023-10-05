@@ -189,44 +189,38 @@ router.get(
 const cache = {};
 router.post("/data/getPrice",
   catchAsyncErrors(async (req, res, next) => {
+    const { item } = req.body;
     try {
-      const response = await axios.get('http://google.com');
-      console.log(response.status, response.data);
-  } catch (error) {
-      console.error('Error:', error.message, error.response.status);
-  }
-    // const { item } = req.body;
-    // try {
-    //     // Verificar si la respuesta está en caché
-    //     if (cache[item]) {
-    //         res.status(201).json({
-    //             success: true,
-    //             data: cache[item],
-    //         });
-    //     } else {
-    //         // Realizar la solicitud a la API externa
-    //         const response = await axios.get(
-    //             `https://csgobackpack.net/api/GetItemPrice/?currency=USD&id=${item}&time=7&icon=1`
-    //         );
-    //         if (response.data.success) {
-    //             // Almacenar en caché la respuesta
-    //             cache[item] = response.data;
-    //             res.status(201).json({
-    //                 success: true,
-    //                 data: response.data,
-    //             });
-    //         } else {
-    //             res.status(404).json({
-    //                 success: false,
-    //                 data: {
-    //                     user: 'NotFound err 404 chech api http://csgobackpack.net/api/GetItemPrice'
-    //                 },
-    //             });
-    //         }
-    //     }
-    // } catch (error) {
-    //     return next(new ErrorHandler(error.message, 500));
-    // }
+        // Verificar si la respuesta está en caché
+        if (cache[item]) {
+            res.status(201).json({
+                success: true,
+                data: cache[item],
+            });
+        } else {
+            // Realizar la solicitud a la API externa
+            const response = await axios.get(
+                `https://csgobackpack.net/api/GetItemPrice/?currency=USD&id=${item}&time=7&icon=1`
+            );
+            if (response.data.success) {
+                // Almacenar en caché la respuesta
+                cache[item] = response.data;
+                res.status(201).json({
+                    success: true,
+                    data: response.data,
+                });
+            } else {
+                res.status(404).json({
+                    success: false,
+                    data: {
+                        user: 'NotFound err 404 chech api http://csgobackpack.net/api/GetItemPrice'
+                    },
+                });
+            }
+        }
+    } catch (error) {
+        return next(new ErrorHandler(error.message, 500));
+    }
   })
 );
 router.get("/data/agents",
