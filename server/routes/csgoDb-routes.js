@@ -201,7 +201,11 @@ router.post("/data/getPrice",
             // Realizar la solicitud a la API externa
             const response = await axios.get(
                 `https://csgobackpack.net/api/GetItemPrice/?currency=USD&id=${item}&time=7&icon=1`
-            );
+            ).then(()=>{
+              console.log('a');
+            }).catch(()=>{
+                return next(new ErrorHandler(error.message, 502));
+            })
             if (response.data.success) {
                 // Almacenar en caché la respuesta
                 cache[item] = response.data;
