@@ -98,52 +98,7 @@ const CasePage = () => {
         return 4
     }
   }
-  const rarityCheckColor = (item: string) => {
-    switch (item) {
 
-      case "Consumer Grade":
-        return {
-          bgColor: "background-color_Base_Grade",
-          linearGradient: "background-lineargradient_Industrial_Grade",
-          cardBd: "cardBg_Base_Grade"
-        }
-
-      case "Mil-Spec Grade":
-        return {
-          bgColor: "background-color_Mil-Spec_High_Grade",
-          linearGradient: "background-lineargradient_Mil-Spec_High_Grade",
-          cardBd: "cardBg_Mil-Spec_High_Grade"
-        }
-      case "Restricted":
-        return {
-          bgColor: "background-color_Restricted_Remarkable",
-          linearGradient: "background-lineargradient_Restricted_Remarkable",
-          cardBd: "cardBg_Restricted_Remarkable"
-
-        }
-      case "Classified":
-        return {
-          bgColor: "background-color_Classified_Exotic",
-          linearGradient: "background-lineargradient_Classified_Exotic",
-          cardBd: "cardBg_Classified_Exotic"
-
-        }
-      case "Covert":
-        return {
-          bgColor: "background-color_Covert_Extraordinary",
-          linearGradient: "background-lineargradient_Covert_Extraordinary",
-          cardBd: "cardBg_Covert_Extraordinary"
-
-        }
-      default:
-        return {
-          bgColor: "background-color_Mil-Spec_High_Grade",
-          linearGradient: "background-lineargradient_Mil-Spec_High_Grade",
-          cardBd: "cardBg_Mil-Spec_High_Grade"
-
-        }
-    }
-  }
   const fetchDataNormalCase = async (itemName: string) => {
     if (caseName) {
       setLoaded(false)
@@ -229,7 +184,7 @@ const CasePage = () => {
 
           fullList ?
             <Roulete
-              caseName={caseData?.name? caseData?.name : ""}
+              caseName={caseData?.name ? caseData?.name : ""}
               type={caseData?.type ? caseData?.type : 'agent'}
               data={(fullList.length % 2 === 0) ? fullList.slice(0, -1) : fullList}
 
@@ -243,7 +198,7 @@ const CasePage = () => {
             <div className='spiner_special_small' />
           </div>
       }
-        <Particles />
+      <Particles />
 
       <div className='my-10   max-w-[1300px] m-auto  p-2 rounded-md  overflow-hidden'>
         <div className='mb-3 flex items-center justify-center'>
@@ -252,25 +207,99 @@ const CasePage = () => {
         <div className='grid gap-2 grid-cols-2 md:grid-cols-5 mt-2'>
           {fullListDisplay && calculatePercentageForUniqueObjects(fullListDisplay).map((data, i) => {
             return (
-              <div key={i} className='h-[150px] overflow-hidden relative flex flex-col items-center justify-center bg-[var(--graybase-900)] border-2 border-zinc-500 rounded-lg'>
-                <div className='absolute z-20 flex flex-col items-center justify-center'>
-                  <img src={data.image} alt="" className='h-[90px]' />
-                  <h1 className='text-zinc-400 text-center font-semibold mt-1 text-sm'>{data.name}</h1>
-                </div>
-
-                <div className='absolute right-3 top-2'>
-                  <h1 className='text-zinc-300 text-center font-semibold mt-1 text-sm'>{data.percentage}%</h1>
-                </div>
-                <div className={`absolute h-full w-1 left-0 ${rarityCheckColor(data.rarity).bgColor}`}></div>
-                <div
-                  className={`absolute cardBg_Base_Grade cardBg_md z-10 ${rarityCheckColor(data.rarity).cardBd}`} />
-              </div>)
+              <CaseInventory item={data} key={i} />
+            )
           })}
         </div>
       </div>
 
 
     </>
+  )
+}
+
+interface cardProps {
+  item: any,
+  key: number
+}
+
+const CaseInventory = ({ item, key }: cardProps) => {
+
+
+  const [loadedImg, setLoadedImg] = useState(false);
+
+  const handleImageLoad = () => {
+    setLoadedImg(true);
+  };
+  const rarityCheckColor = (item: string) => {
+    switch (item) {
+
+      case "Consumer Grade":
+        return {
+          bgColor: "background-color_Base_Grade",
+          linearGradient: "background-lineargradient_Industrial_Grade",
+          cardBd: "cardBg_Base_Grade"
+        }
+
+      case "Mil-Spec Grade":
+        return {
+          bgColor: "background-color_Mil-Spec_High_Grade",
+          linearGradient: "background-lineargradient_Mil-Spec_High_Grade",
+          cardBd: "cardBg_Mil-Spec_High_Grade"
+        }
+      case "Restricted":
+        return {
+          bgColor: "background-color_Restricted_Remarkable",
+          linearGradient: "background-lineargradient_Restricted_Remarkable",
+          cardBd: "cardBg_Restricted_Remarkable"
+
+        }
+      case "Classified":
+        return {
+          bgColor: "background-color_Classified_Exotic",
+          linearGradient: "background-lineargradient_Classified_Exotic",
+          cardBd: "cardBg_Classified_Exotic"
+
+        }
+      case "Covert":
+        return {
+          bgColor: "background-color_Covert_Extraordinary",
+          linearGradient: "background-lineargradient_Covert_Extraordinary",
+          cardBd: "cardBg_Covert_Extraordinary"
+
+        }
+      default:
+        return {
+          bgColor: "background-color_Mil-Spec_High_Grade",
+          linearGradient: "background-lineargradient_Mil-Spec_High_Grade",
+          cardBd: "cardBg_Mil-Spec_High_Grade"
+
+        }
+    }
+  }
+
+  return (
+    <div key={key} className='h-[150px] overflow-hidden relative flex flex-col items-center justify-center bg-[var(--graybase-900)] border-2 border-zinc-500 rounded-lg'>
+      <div className='absolute z-20 flex flex-col items-center justify-center'>
+      <img
+          onLoad={handleImageLoad}
+          src={item.image}
+          alt=""
+          className={`h-[90px] ${loadedImg ? '' : 'hidden'}`}
+        />
+        {!loadedImg && (
+          <div className={`h-[90px] w-[30px] bg-transparent`}></div>
+        )}
+        <h1 className='text-zinc-400 text-center font-semibold mt-1 text-sm'>{item.name}</h1>
+      </div>
+
+      <div className='absolute right-3 top-2'>
+        <h1 className='text-zinc-300 text-center font-semibold mt-1 text-sm'>{item.percentage}%</h1>
+      </div>
+      <div className={`absolute h-full w-1 left-0 ${rarityCheckColor(item.rarity).bgColor}`}></div>
+      <div
+        className={`absolute cardBg_Base_Grade cardBg_md z-10 ${rarityCheckColor(item.rarity).cardBd}`} />
+    </div>
   )
 }
 

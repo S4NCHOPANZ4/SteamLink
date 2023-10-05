@@ -42,7 +42,7 @@ const DisplayCases = ({ dataCases }: props) => {
         {
           dataCases && dataCases.map((data, i) => {
             return (
-              <SwiperSlide>
+              <SwiperSlide key={i}>
 
                 <div key={i}>
                   <Cases data={data} />

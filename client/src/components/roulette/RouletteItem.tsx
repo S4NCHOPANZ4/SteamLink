@@ -15,8 +15,8 @@ const RouletteItem = ({ item, center }: props) => {
   }>()
 
   const [skinName, setSkinName] = useState<String[] | null>()
-
-
+  
+  const [loadedImg, setLoadedImg] = useState(false);
 
   useEffect(() => {
     setBgColor(rarityCheck(item?.rarity? item?.rarity: 's'))
@@ -65,14 +65,21 @@ const RouletteItem = ({ item, center }: props) => {
     }
   }
 
+  const handleImageLoad = () => {
+    setLoadedImg(true);
+  };
 
   return (
     <div  className={`${bgColor?.linearGradient} relative w-[190px] h-full flex items-center justify-center  mx-[.09rem] `}>
       <img
-        className={`h-[55%] ${center ? "" : ""}`}
+        onLoad={handleImageLoad}
+        className={`h-[55%] ${center ? "" : ""} ${loadedImg ? '' : 'hidden'}`}
         src={item?  item.image: ""}
-        alt="asd"
+        alt="item-img"
       />
+        {!loadedImg && (
+          <div className={`h-[90px] w-[30px] bg-transparent`}></div>
+        )}
       <div className={`absolute  w-full bottom-1 left-1`}>
         <h1 className='text-[.7rem] text-zinc-400 font-bold '>{skinName ? skinName[0] : ''}</h1>
         <h1 className='text-[.9rem] text-zinc-200 font-bold'>{skinName ? skinName[skinName.length - 1] : ''}</h1>
