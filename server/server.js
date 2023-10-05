@@ -27,22 +27,28 @@ app.use(cookieParser());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json()); 
 app.use(cors({
-  origin: 'https://casejolt.vercel.app',
+  origin: "https://casejolt.vercel.app",
   credentials: true,
 }));
+
 passport.serializeUser((user, done) => {
     done(null, user)
 });
 passport.deserializeUser((user, done) => {
   done(null, user)
 });
-app.use((req, res, next) => {
-  res.header('Access-Control-Allow-Origin', 'https://casejolt.vercel.app');
-  res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
-  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
-  next();
-});
-
+// app.use((req, res, next) => {
+//   res.header('Access-Control-Allow-Origin', 'https://casejolt.vercel.app');
+//   res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
+//   res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+//   next();
+// });
+// app.use('/auth/user', (req, res, next) => {
+//   res.header('Access-Control-Allow-Origin', 'https://casejolt.vercel.app');
+//   res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
+//   res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+//   next();
+// });
 
 const authRoutes = require('./routes/passport-routes');
 const csgoGameAssets = require('./routes/csgoDb-routes');
