@@ -27,11 +27,8 @@ app.use(cookieParser());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json()); 
 app.use(cors({
-  origin: ['https://casejolt.vercel.app', 'https://csgobackpack.net'],
-  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+  origin: 'https://casejolt.vercel.app',
   credentials: true,
-  optionsSuccessStatus: 204,
-  allowedHeaders: ["Origin", "X-Requested-With", "Content-Type", "Accept", "Authorization"],
 }));
 passport.serializeUser((user, done) => {
     done(null, user)
