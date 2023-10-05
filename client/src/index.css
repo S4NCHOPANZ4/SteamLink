@@ -300,6 +300,23 @@ html{
     80%{background-position:0%  50%, 50%  50%,100% 100%}
 }
 
+@keyframes breathing {
+  0% {
+    background-color: #272533; 
+  }
+  50% {
+    background-color: #201d2a; 
+  }
+
+  100% {
+    background-color: #272533; 
+  }
+}
+
+.breathing_anim{
+  animation: breathing 4s ease-in-out infinite; /* 4 segundos de duración, se repite infinitamente */
+}
+
 /* //================================================================================= */
 
 .border-poligon{

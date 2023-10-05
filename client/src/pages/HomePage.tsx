@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import axios from 'axios';
 import Navbar from '../components/layout/Navbar';
-import { CSGOCapsulesPack, CSGOMusicKitBox, CSgoWeaponCase, GraffitiBox } from '../models/csgoAssets-model';
+import { CSGOCapsulesPack, CSgoWeaponCase, GraffitiBox } from '../models/csgoAssets-model';
 import Cases from '../components/cases/Cases';
 import Header from '../components/layout/Header';
 import DisplayCases from '../components/DisplayCases';
@@ -9,6 +9,7 @@ import MiniNabbar from '../components/layout/MiniNabbar';
 import Particles from '../components/bg-style-components/Particles';
 import Cubes from '../components/bg-style-components/Cubes';
 import Footer from '../components/layout/Footer';
+import LoadingCases from '../components/bg-style-components/LoadingCases';
 
 interface UserData {
     steamId: string;
@@ -21,9 +22,11 @@ const HomePage = () => {
     const [userData, setUserData] = useState<null | UserData>(null);
     const [caseData, setCaseData] = useState<CSgoWeaponCase[] | null>()
     const [patchesData, setPatchesData] = useState<CSGOCapsulesPack[] | null>()
-    const [musicsData, setMusicData] = useState<CSGOMusicKitBox[] | null>()
     const [souvenirData, setSouvenirData] = useState<CSgoWeaponCase[] | null>()
     const [graffitiData, setGraffitiData] = useState<GraffitiBox[] | null>()
+    const [loadedAllCases, setLoadedAllCases] = useState<boolean>(false)
+    const [loadedCSpatches, setLoadedCSpatches] = useState<boolean>(false)
+    const [loadedSpray, setLoadedSpray] = useState<boolean>(false)
 
     useEffect(() => {
 
@@ -31,7 +34,7 @@ const HomePage = () => {
             .then(response => {
                 setUserData(response.data)
                 console.log(userData);
-                
+
             })
             .catch(error => {
                 console.error('Error al obtener datos de usuario:', error);
@@ -42,47 +45,51 @@ const HomePage = () => {
 
 
     useEffect(() => {
-    document.title = "CaseJolt - Home";
+        document.title = "CaseJolt - Home";
         FetchCScases()
         FetchCScapsules()
-        FetchCSmusic()
         FetchCSsouvenir()
         FetchCSGraffiti()
     }, [])
 
     const FetchCScases = async () => {
+        setLoadedAllCases(false)
         try {
-            const response = await axios.get<{ success: boolean, data: CSgoWeaponCase[] }>(`${import.meta.env.VITE_BACKEND_URL}/assets/data/cases`,{ withCredentials: true });
-            if (response.data.success) { setCaseData(response.data.data) }
-            else { setCaseData(null) }
+            const response = await axios.get<{ success: boolean, data: CSgoWeaponCase[] }>(`${import.meta.env.VITE_BACKEND_URL}/assets/data/cases`, { withCredentials: true });
+            if (response.data.success) {
+                setLoadedAllCases(true)
+                setCaseData(response.data.data)
+            }
+            else {
+                setLoadedAllCases(true)
+                setCaseData(null)
+            }
         } catch (error) {
+            setLoadedAllCases(true)
             console.error('Error al obtener datos del usuario:', error);
         }
     };
     const FetchCScapsules = async () => {
+        setLoadedCSpatches(false)
+        setLoadedCSpatches(false)
         try {
-            const response = await axios.get<{ success: boolean, data: CSGOCapsulesPack[] }>(`${import.meta.env.VITE_BACKEND_URL}/assets/data/patches`,{ withCredentials: true });
-            if (response.data.success) { setPatchesData(response.data.data) }
-            else { setPatchesData(null) }
-        } catch (error) {
-            console.error('Error al obtener datos del usuario:', error);
-        }
-    }
-    const FetchCSmusic = async () => {
-        try {
-            const response = await axios.get<{ success: boolean, data: CSGOMusicKitBox[] }>(`${import.meta.env.VITE_BACKEND_URL}/assets/data/music`,{ withCredentials: true });
-            if (response.data.success) { setMusicData(response.data.data) }
+            const response = await axios.get<{ success: boolean, data: CSGOCapsulesPack[] }>(`${import.meta.env.VITE_BACKEND_URL}/assets/data/patches`, { withCredentials: true });
+            if (response.data.success) {
+                setLoadedCSpatches(true)
+                setPatchesData(response.data.data)
+            }
             else {
-                console.log(musicsData);
-
-                setMusicData(null) }
+                setLoadedCSpatches(true)
+                setPatchesData(null)
+            }
         } catch (error) {
+            setLoadedCSpatches(true)
             console.error('Error al obtener datos del usuario:', error);
         }
     }
     const FetchCSsouvenir = async () => {
         try {
-            const response = await axios.get<{ success: boolean, data: CSgoWeaponCase[] }>(`${import.meta.env.VITE_BACKEND_URL}/assets/data/souvenir`,{ withCredentials: true });
+            const response = await axios.get<{ success: boolean, data: CSgoWeaponCase[] }>(`${import.meta.env.VITE_BACKEND_URL}/assets/data/souvenir`, { withCredentials: true });
             if (response.data.success) { setSouvenirData(response.data.data) }
             else { setSouvenirData(null) }
         } catch (error) {
@@ -90,11 +97,19 @@ const HomePage = () => {
         }
     }
     const FetchCSGraffiti = async () => {
+        setLoadedSpray(false)
         try {
-            const response = await axios.get<{ success: boolean, data: GraffitiBox[] }>(`${import.meta.env.VITE_BACKEND_URL}/assets/data/graffiti`,{ withCredentials: true });
-            if (response.data.success) { setGraffitiData(response.data.data) }
-            else { setGraffitiData(null) }
+            const response = await axios.get<{ success: boolean, data: GraffitiBox[] }>(`${import.meta.env.VITE_BACKEND_URL}/assets/data/graffiti`, { withCredentials: true });
+            if (response.data.success) {
+                setLoadedSpray(true)
+                setGraffitiData(response.data.data)
+            }
+            else {
+                setLoadedSpray(true)
+                setGraffitiData(null)
+            }
         } catch (error) {
+            setLoadedSpray(true)
             console.error('Error al obtener datos del usuario:', error);
         }
     }
@@ -117,11 +132,16 @@ const HomePage = () => {
                 <div className='w-[95%] md:w-[85%] m-auto mb-3 pt-10'>
                     <h1 className='text-white font-bold text-md md:text-2xl'>ALL CS CASES </h1>
                 </div>
-                <div className=' h-[550px] overflow-auto w-[90%] md:w-[85%] m-auto  p-2 rounded-md'>
-                    <div className='grid gap-2 grid-cols-1 sm:grid-cols-3 md:grid-cols-5 '>
-                        {caseData && caseData.map((data, i) => { return (<div key={i}><Cases data={data} /></div>) })}
+                {loadedAllCases ?
+                    <div className=' h-[550px] overflow-auto w-[90%] md:w-[85%] m-auto  p-2 rounded-md'>
+                        <div className='grid gap-2 grid-cols-1 sm:grid-cols-3 md:grid-cols-5 '>
+                            {caseData && caseData?.map((data, i) => { return (<div key={i}><Cases data={data} /></div>) })}
+                        </div>
                     </div>
-                </div>
+                    :
+                    <LoadingCases heigth={550} />
+                }
+
 
             </div>
 
@@ -133,11 +153,20 @@ const HomePage = () => {
                 </div>
 
                 <Cubes />
-                <div className=' h-[550px] overflow-auto w-[90%] md:w-[85%] m-auto  p-2 rounded-md'>
-                    <div className='grid gap-2 grid-cols-1 sm:grid-cols-3 md:grid-cols-5 '>
-                        {patchesData && patchesData.map((data, i) => { return (<div key={i}><Cases data={data} /></div>) })}
-                    </div>
-                </div>
+                {
+
+                    loadedCSpatches ?
+                        <div className=' h-[550px] overflow-auto w-[90%] md:w-[85%] m-auto  p-2 rounded-md'>
+                            <div className='grid gap-2 grid-cols-1 sm:grid-cols-3 md:grid-cols-5 '>
+                                {patchesData && patchesData?.map((data, i) => { return (<div key={i}><Cases data={data} /></div>) })}
+                            </div>
+                        </div>
+                        :
+                        <LoadingCases heigth={500} />
+
+
+                }
+
 
             </div>
             {/* Graffiti */}
@@ -145,12 +174,17 @@ const HomePage = () => {
                 <div className='w-[95%] md:w-[85%] m-auto mb-3 pt-10'>
                     <h1 className='text-white font-bold text-md md:text-2xl'>ALL CS GRAFFITI KITS </h1>
                 </div>
+                {
+                    loadedSpray ?
+                        <div className=' h-[300px] overflow-auto w-[90%] md:w-[85%] m-auto  p-2 rounded-md'>
+                            <div className='grid gap-2 grid-cols-1 sm:grid-cols-3 md:grid-cols-5 '>
+                                {graffitiData && graffitiData?.map((data, i) => { return (<div key={i}><Cases data={data} /></div>) })}
+                            </div>
+                        </div> :
+                        <LoadingCases heigth={250} />
 
-                <div className=' h-[300px] overflow-auto w-[90%] md:w-[85%] m-auto  p-2 rounded-md'>
-                    <div className='grid gap-2 grid-cols-1 sm:grid-cols-3 md:grid-cols-5 '>
-                        {graffitiData && graffitiData.map((data, i) => { return (<div key={i}><Cases data={data} /></div>) })}
-                    </div>
-                </div>
+                }
+
             </div>
             {/* Souvenir */}
 
@@ -164,7 +198,7 @@ const HomePage = () => {
                 }
             </div>
             <div>
-                <Footer/>
+                <Footer />
             </div>
 
         </>
